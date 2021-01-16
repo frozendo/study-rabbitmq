@@ -12,49 +12,49 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DirectConfig {
 
-    public static final String DIRECT_EXAMPLE_EXCHANGE = "direct-example-exchange";
+    public static final String SAMPLE_DIRECT_EXCHANGE = "sample-direct-exchange";
 
-    public static final String EXAMPLE_DIRECT_QUEUE = "example-direct-queue";
-    public static final String OTHER_EXAMPLE_DIRECT_QUEUE = "other-example-direct-queue";
+    public static final String SAMPLE_DIRECT_QUEUE = "sample-direct-queue";
+    public static final String OTHER_SAMPLE_DIRECT_QUEUE = "other-sample-direct-queue";
 
-    public static final String DIRECT_EXAMPLE_BINDING = "example.routing.binding";
-    public static final String OTHER_EXAMPLE_BINDING = "other.routing.binding";
+    public static final String EXAMPLE_QUEUE_BINDING = "example.queue.binding";
+    public static final String OTHER_QUEUE_BINDING = "other.queue.binding";
 
     @Bean
     Exchange directExchange() {
         return ExchangeBuilder
-                .directExchange(DIRECT_EXAMPLE_EXCHANGE)
+                .directExchange(SAMPLE_DIRECT_EXCHANGE)
                 .build();
     }
 
     @Bean
-    Binding bindingExampleQueueDirect() {
+    Binding bindingSampleQueueDirect() {
         return BindingBuilder
-                .bind(exampleDirectQueue()).to(directExchange())
-                .with(DIRECT_EXAMPLE_BINDING)
+                .bind(sampleDirectQueue()).to(directExchange())
+                .with(EXAMPLE_QUEUE_BINDING)
                 .noargs();
     }
 
     @Bean
-    Binding bindingOtherExampleQueueDirect() {
+    Binding bindingOtherSampleQueueDirect() {
         return BindingBuilder
-                .bind(otherExampleDirectQueue())
+                .bind(otherSampleDirectQueue())
                 .to(directExchange())
-                .with(OTHER_EXAMPLE_BINDING)
+                .with(OTHER_QUEUE_BINDING)
                 .noargs();
     }
 
     @Bean
-    Queue exampleDirectQueue() {
+    Queue sampleDirectQueue() {
         return QueueBuilder
-                .durable(EXAMPLE_DIRECT_QUEUE)
+                .durable(SAMPLE_DIRECT_QUEUE)
                 .build();
     }
 
     @Bean
-    Queue otherExampleDirectQueue() {
+    Queue otherSampleDirectQueue() {
         return QueueBuilder
-                .durable(OTHER_EXAMPLE_DIRECT_QUEUE)
+                .durable(OTHER_SAMPLE_DIRECT_QUEUE)
                 .build();
     }
 

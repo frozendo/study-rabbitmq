@@ -14,10 +14,10 @@ import java.util.Map;
 @Configuration
 public class HeaderConfig {
 
-    public static final String HEADER_EXAMPLE_EXCHANGE = "header-example-exchange";
+    public static final String SAMPLE_HEADER_EXCHANGE = "sample-header-exchange";
 
-    public static final String EXAMPLE_HEADER_QUEUE = "example-header-queue";
-    public static final String OTHER_EXAMPLE_HEADER_QUEUE = "other-example-header-queue";
+    public static final String SAMPLE_HEADER_QUEUE = "sample-header-queue";
+    public static final String OTHER_SAMPLE_HEADER_QUEUE = "other-sample-header-queue";
 
     public static final String TEST_HEADER_KEY = "test";
     public static final String TYPE_HEADER_KEY = "type";
@@ -26,12 +26,12 @@ public class HeaderConfig {
     @Bean
     Exchange headerExchange() {
         return ExchangeBuilder
-                .headersExchange(HEADER_EXAMPLE_EXCHANGE)
+                .headersExchange(SAMPLE_HEADER_EXCHANGE)
                 .build();
     }
 
     @Bean
-    Binding bindingExampleQueueHeader() {
+    Binding bindingSampleQueueHeader() {
         Map<String, Object> map = Map.of(
                 TEST_HEADER_KEY, "example-test",
                 TYPE_HEADER_KEY, "all-header",
@@ -39,13 +39,13 @@ public class HeaderConfig {
         );
 
         return BindingBuilder
-                .bind(exampleHeaderQueue()).to(headerExchange())
+                .bind(sampleHeaderQueue()).to(headerExchange())
                 .with("")
                 .and(map);
     }
 
     @Bean
-    Binding bindingOtherExampleQueueHeader() {
+    Binding bindingOtherSampleQueueHeader() {
         Map<String, Object> map = Map.of(
                 TEST_HEADER_KEY, "other-test",
                 TYPE_HEADER_KEY, "any-header",
@@ -53,22 +53,22 @@ public class HeaderConfig {
         );
 
         return BindingBuilder
-                .bind(otherExampleHeaderQueue()).to(headerExchange())
+                .bind(otherSampleHeaderQueue()).to(headerExchange())
                 .with("")
                 .and(map);
     }
 
     @Bean
-    Queue exampleHeaderQueue() {
+    Queue sampleHeaderQueue() {
         return QueueBuilder
-                .durable(EXAMPLE_HEADER_QUEUE)
+                .durable(SAMPLE_HEADER_QUEUE)
                 .build();
     }
 
     @Bean
-    Queue otherExampleHeaderQueue() {
+    Queue otherSampleHeaderQueue() {
         return QueueBuilder
-                .durable(OTHER_EXAMPLE_HEADER_QUEUE)
+                .durable(OTHER_SAMPLE_HEADER_QUEUE)
                 .build();
     }
 }

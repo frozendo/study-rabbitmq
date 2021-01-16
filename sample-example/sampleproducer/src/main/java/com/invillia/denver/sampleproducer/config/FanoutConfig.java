@@ -12,46 +12,46 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FanoutConfig {
 
-    public static final String FANOUT_EXAMPLE_EXCHANGE = "fanout-example-exchange";
+    public static final String SAMPLE_FANOUT_EXCHANGE = "sample-fanout-exchange";
 
-    public static final String EXAMPLE_FANOUT_QUEUE = "example-fanout-queue";
-    public static final String OTHER_EXAMPLE_FANOUT_QUEUE = "other-example-fanout-queue";
+    public static final String SAMPLE_FANOUT_QUEUE = "sample-fanout-queue";
+    public static final String OTHER_SAMPLE_FANOUT_QUEUE = "other-sample-fanout-queue";
 
     @Bean
     Exchange fanoutExchange() {
         return ExchangeBuilder
-                .fanoutExchange(FANOUT_EXAMPLE_EXCHANGE)
+                .fanoutExchange(SAMPLE_FANOUT_EXCHANGE)
                 .build();
     }
 
     @Bean
-    Binding bindingExampleQueueFanout() {
+    Binding bindingSampleQueueFanout() {
         return BindingBuilder
-                .bind(exampleFanoutQueue()).to(fanoutExchange())
+                .bind(sampleFanoutQueue()).to(fanoutExchange())
                 .with("")
                 .noargs();
     }
 
     @Bean
-    Binding bindingOtherExampleQueueFanout() {
+    Binding bindingOtherSampleQueueFanout() {
         return BindingBuilder
-                .bind(otherExampleFanoutQueue())
+                .bind(otherSampleFanoutQueue())
                 .to(fanoutExchange())
                 .with("")
                 .noargs();
     }
 
     @Bean
-    Queue exampleFanoutQueue() {
+    Queue sampleFanoutQueue() {
         return QueueBuilder
-                .durable(EXAMPLE_FANOUT_QUEUE)
+                .durable(SAMPLE_FANOUT_QUEUE)
                 .build();
     }
 
     @Bean
-    Queue otherExampleFanoutQueue() {
+    Queue otherSampleFanoutQueue() {
         return QueueBuilder
-                .durable(OTHER_EXAMPLE_FANOUT_QUEUE)
+                .durable(OTHER_SAMPLE_FANOUT_QUEUE)
                 .build();
     }
 

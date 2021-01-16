@@ -1,10 +1,9 @@
-package com.invillia.denver.sampleconsumer.model;
+package com.invillia.denver.sampleproducer.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Product implements Serializable {
+public class ProductProducer {
 
     private Long id;
     private String name;
@@ -38,10 +37,10 @@ public class Product implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) &&
-                Objects.equals(name, product.name) &&
-                Objects.equals(price, product.price);
+        ProductProducer that = (ProductProducer) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(price, that.price);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductProducer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +

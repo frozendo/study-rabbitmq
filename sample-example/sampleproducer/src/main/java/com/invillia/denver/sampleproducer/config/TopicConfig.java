@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TopicConfig {
 
-    public static final String TOPIC_EXAMPLE_EXCHANGE = "topic-example-exchange";
+    public static final String SAMPLE_TOPIC_EXCHANGE = "sample-topic-exchange";
 
-    public static final String EXAMPLE_TOPIC_QUEUE = "example-topic-queue";
-    public static final String OTHER_EXAMPLE_TOPIC_QUEUE = "other-example-topic-queue";
-    public static final String THIRD_EXAMPLE_TOPIC_QUEUE = "third-example-topic-queue";
+    public static final String SAMPLE_TOPIC_QUEUE = "sample-topic-queue";
+    public static final String OTHER_SAMPLE_TOPIC_QUEUE = "other-sample-topic-queue";
+    public static final String THIRD_SAMPLE_TOPIC_QUEUE = "third-sample-topic-queue";
 
     public static final String BINDING_EXAMPLE = "example.#";
     public static final String BINDING_OTHER_EXAMPLE = "example.other.#";
@@ -25,54 +25,54 @@ public class TopicConfig {
     @Bean
     Exchange topicExchange() {
         return ExchangeBuilder
-                .topicExchange(TOPIC_EXAMPLE_EXCHANGE)
+                .topicExchange(SAMPLE_TOPIC_EXCHANGE)
                 .build();
     }
 
     @Bean
-    Binding bindingExampleQueueTopic() {
+    Binding bindingSampleQueueTopic() {
         return BindingBuilder
-                .bind(exampleTopicQueue()).to(topicExchange())
+                .bind(sampleTopicQueue()).to(topicExchange())
                 .with(BINDING_EXAMPLE)
                 .noargs();
     }
 
     @Bean
-    Binding bindingOtherExampleQueueTopic() {
+    Binding bindingOtherSampleQueueTopic() {
         return BindingBuilder
-                .bind(otherExampleTopicQueue())
+                .bind(otherSampleTopicQueue())
                 .to(topicExchange())
                 .with(BINDING_OTHER_EXAMPLE)
                 .noargs();
     }
 
     @Bean
-    Binding bindingThirdExampleQueueTopic() {
+    Binding bindingThirdSampleQueueTopic() {
         return BindingBuilder
-                .bind(thirdExampleQueue())
+                .bind(thirdSampleTopicQueue())
                 .to(topicExchange())
                 .with(BINDING_THIRD)
                 .noargs();
     }
 
     @Bean
-    Queue exampleTopicQueue() {
+    Queue sampleTopicQueue() {
         return QueueBuilder
-                .durable(EXAMPLE_TOPIC_QUEUE)
+                .durable(SAMPLE_TOPIC_QUEUE)
                 .build();
     }
 
     @Bean
-    Queue otherExampleTopicQueue() {
+    Queue otherSampleTopicQueue() {
         return QueueBuilder
-                .durable(OTHER_EXAMPLE_TOPIC_QUEUE)
+                .durable(OTHER_SAMPLE_TOPIC_QUEUE)
                 .build();
     }
 
     @Bean
-    Queue thirdExampleQueue() {
+    Queue thirdSampleTopicQueue() {
         return QueueBuilder
-                .durable(THIRD_EXAMPLE_TOPIC_QUEUE)
+                .durable(THIRD_SAMPLE_TOPIC_QUEUE)
                 .build();
     }
 }
