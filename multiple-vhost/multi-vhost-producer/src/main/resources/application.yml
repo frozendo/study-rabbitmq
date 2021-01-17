@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: rabbitmq-producer-multiple-vhost
+  rabbitmq:
+
+    host: localhost
+    port: 5672
+    username: fanout-user
+    password: 123456
+    virtual-host: fanout-vhost
+
+    topic-host: localhost
+    topic-port: 5672
+    topic-username: topic-user
+    topic-password: 654321
+    topic-virtual-host: topic-vhost
+
+server:
+  port: 8085
