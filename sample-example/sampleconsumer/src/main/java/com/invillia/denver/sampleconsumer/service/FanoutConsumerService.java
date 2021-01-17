@@ -1,7 +1,7 @@
 package com.invillia.denver.sampleconsumer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.invillia.denver.sampleconsumer.model.ProductConsumer;
+import com.invillia.denver.sampleconsumer.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -28,7 +28,7 @@ public class FanoutConsumerService {
     @RabbitListener(queues = SAMPLE_FANOUT_QUEUE)
     public void sampleFanoutQueueConsumer(Message message) throws IOException {
         try {
-            var product = objectMapper.readValue(message.getBody(), ProductConsumer.class);
+            var product = objectMapper.readValue(message.getBody(), Product.class);
             LOG.info(LOG_MESSAGE, SAMPLE_FANOUT_QUEUE, product);
         } catch (IOException e) {
             LOG.error("Error to consume message", e);
@@ -39,7 +39,7 @@ public class FanoutConsumerService {
     @RabbitListener(queues = OTHER_SAMPLE_FANOUT_QUEUE)
     public void otherFanoutQueueConsumer(Message message) throws IOException {
         try {
-            var product = objectMapper.readValue(message.getBody(), ProductConsumer.class);
+            var product = objectMapper.readValue(message.getBody(), Product.class);
             LOG.info(LOG_MESSAGE, OTHER_SAMPLE_FANOUT_QUEUE, product);
         } catch (IOException e) {
             LOG.error("Error to consume message", e);

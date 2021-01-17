@@ -1,7 +1,7 @@
 package com.invillia.denver.sampleconsumer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.invillia.denver.sampleconsumer.model.ProductConsumer;
+import com.invillia.denver.sampleconsumer.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -28,7 +28,7 @@ public class DirectConsumerService {
     @RabbitListener(queues = SAMPLE_DIRECT_QUEUE)
     public void sampleDirectQueueConsumer(Message message) throws IOException {
         try {
-            var product = objectMapper.readValue(message.getBody(), ProductConsumer.class);
+            var product = objectMapper.readValue(message.getBody(), Product.class);
             var routingKey = message.getMessageProperties().getReceivedRoutingKey();
             LOG.info(LOG_MESSAGE, SAMPLE_DIRECT_QUEUE, routingKey, product);
         } catch (IOException e) {
@@ -40,7 +40,7 @@ public class DirectConsumerService {
     @RabbitListener(queues = OTHER_SAMPLE_DIRECT_QUEUE)
     public void otherDirectQueueConsumer(Message message) throws IOException {
         try {
-            var product = objectMapper.readValue(message.getBody(), ProductConsumer.class);
+            var product = objectMapper.readValue(message.getBody(), Product.class);
             var routingKey = message.getMessageProperties().getReceivedRoutingKey();
             LOG.info(LOG_MESSAGE, OTHER_SAMPLE_DIRECT_QUEUE, routingKey, product);
         } catch (IOException e) {

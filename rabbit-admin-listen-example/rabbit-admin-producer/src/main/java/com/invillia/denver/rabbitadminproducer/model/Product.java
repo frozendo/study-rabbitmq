@@ -1,9 +1,10 @@
-package com.invillia.denver.sampleconsumer.model;
+package com.invillia.denver.rabbitadminproducer.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class ProductConsumer {
+public class Product implements Serializable {
 
     private Long id;
     private String name;
@@ -37,10 +38,10 @@ public class ProductConsumer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductConsumer that = (ProductConsumer) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(price, that.price);
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(price, product.price);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ProductConsumer {
 
     @Override
     public String toString() {
-        return "ProductProducer{" +
+        return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
