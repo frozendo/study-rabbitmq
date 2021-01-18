@@ -3,7 +3,7 @@ package com.invillia.denver.sampleproducer.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class ProductProducer {
+public class Product {
 
     private Long id;
     private String name;
@@ -37,7 +37,7 @@ public class ProductProducer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductProducer that = (ProductProducer) o;
+        Product that = (Product) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(price, that.price);

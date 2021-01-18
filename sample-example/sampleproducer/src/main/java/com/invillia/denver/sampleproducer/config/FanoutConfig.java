@@ -12,46 +12,47 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FanoutConfig {
 
-    public static final String SAMPLE_FANOUT_EXCHANGE = "sample-fanout-exchange";
+    public static final String SAMPLE_BEAN_FANOUT_EXCHANGE = "sample-bean-fanout-exchange";
 
-    public static final String SAMPLE_FANOUT_QUEUE = "sample-fanout-queue";
-    public static final String OTHER_SAMPLE_FANOUT_QUEUE = "other-sample-fanout-queue";
+    public static final String SAMPLE_BEAN_FANOUT_QUEUE = "sample-bean-fanout-queue";
+    public static final String OTHER_SAMPLE_BEAN_FANOUT_QUEUE = "other-sample-bean-fanout-queue";
 
     @Bean
     Exchange fanoutExchange() {
         return ExchangeBuilder
-                .fanoutExchange(SAMPLE_FANOUT_EXCHANGE)
+                .fanoutExchange(SAMPLE_BEAN_FANOUT_EXCHANGE)
                 .build();
     }
 
     @Bean
-    Binding bindingSampleQueueFanout() {
+    Binding bindingSampleBeanQueueFanout() {
         return BindingBuilder
-                .bind(sampleFanoutQueue()).to(fanoutExchange())
-                .with("")
-                .noargs();
-    }
-
-    @Bean
-    Binding bindingOtherSampleQueueFanout() {
-        return BindingBuilder
-                .bind(otherSampleFanoutQueue())
+                .bind(sampleBeanQueueFanout())
                 .to(fanoutExchange())
                 .with("")
                 .noargs();
     }
 
     @Bean
-    Queue sampleFanoutQueue() {
+    Binding bindingOtherSampleBeanQueueFanout() {
+        return BindingBuilder
+                .bind(otherSampleBeanQueueFanout())
+                .to(fanoutExchange())
+                .with("")
+                .noargs();
+    }
+
+    @Bean
+    Queue sampleBeanQueueFanout() {
         return QueueBuilder
-                .durable(SAMPLE_FANOUT_QUEUE)
+                .durable(SAMPLE_BEAN_FANOUT_QUEUE)
                 .build();
     }
 
     @Bean
-    Queue otherSampleFanoutQueue() {
+    Queue otherSampleBeanQueueFanout() {
         return QueueBuilder
-                .durable(OTHER_SAMPLE_FANOUT_QUEUE)
+                .durable(OTHER_SAMPLE_BEAN_FANOUT_QUEUE)
                 .build();
     }
 
