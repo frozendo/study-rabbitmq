@@ -16,7 +16,9 @@ public class TopicConsumerService {
     public static final String MULTI_VHOST_TOPIC_QUEUE = "multi-vhost-topic-queue";
     public static final String OTHER_MULTI_VHOST_TOPIC_QUEUE = "other-multi-vhost-topic-queue";
     public static final String THIRD_MULTI_VHOST_TOPIC_QUEUE = "third-multi-vhost-topic-queue";
+
     public static final String TOPIC_LISTENER_CONTAINER = "topicListenerContainer";
+
     public static final String LOG_MESSAGE = "Consume QUEUE {}, with ROUTING_KEY = {}, with VALUE = {}";
 
     private Logger LOG = LoggerFactory.getLogger(TopicConsumerService.class);

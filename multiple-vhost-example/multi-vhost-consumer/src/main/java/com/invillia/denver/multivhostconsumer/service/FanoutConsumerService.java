@@ -15,7 +15,9 @@ public class FanoutConsumerService {
 
     public static final String MULTI_VHOST_FANOUT_QUEUE = "multi-vhost-fanout-queue";
     public static final String OTHER_MULTI_VHOST_FANOUT_QUEUE = "other-multi-vhost-fanout-queue";
+
     public static final String PRIMARY_LISTENER_CONTAINER = "primaryListenerContainer";
+    
     public static final String LOG_MESSAGE = "Consume QUEUE {}, with VALUE = {}";
 
     private Logger LOG = LoggerFactory.getLogger(FanoutConsumerService.class);

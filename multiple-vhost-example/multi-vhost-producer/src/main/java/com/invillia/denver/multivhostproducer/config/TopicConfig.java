@@ -14,11 +14,11 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class TopicConfig {
 
-    public static final String ADMIN_LISTEN_TOPIC_EXCHANGE = "multi-vhost-topic-exchange";
+    public static final String MULTI_VHOST_TOPIC_EXCHANGE = "multi-vhost-topic-exchange";
 
-    public static final String ADMIN_LISTEN_TOPIC_QUEUE = "multi-vhost-topic-queue";
-    public static final String OTHER_ADMIN_LISTEN_TOPIC_QUEUE = "other-multi-vhost-topic-queue";
-    public static final String THIRD_ADMIN_LISTEN_TOPIC_QUEUE = "third-multi-vhost-topic-queue";
+    public static final String MULTI_VHOST_TOPIC_QUEUE = "multi-vhost-topic-queue";
+    public static final String OTHER_MULTI_VHOST_TOPIC_QUEUE = "other-multi-vhost-topic-queue";
+    public static final String THIRD_MULTI_VHOST_TOPIC_QUEUE = "third-multi-vhost-topic-queue";
 
     public static final String BINDING_EXAMPLE = "example.#";
     public static final String BINDING_OTHER_EXAMPLE = "example.other.#";
@@ -32,59 +32,59 @@ public class TopicConfig {
     private void createTopicElements() {
         var rabbitAdmin = new RabbitAdmin(connectionFactory);
         createTopicExchange(rabbitAdmin);
-        createAdminListenTopicQueue(rabbitAdmin);
-        createOtherAdminListenTopicQueue(rabbitAdmin);
-        createThirdAdminListenTopicQueue(rabbitAdmin);
-        createBindingAdminListenQueueTopic(rabbitAdmin);
-        createBindingOtherAdminListenQueueTopic(rabbitAdmin);
-        createBindingThirdAdminListenQueueTopic(rabbitAdmin);
+        createMultiVhostTopicQueue(rabbitAdmin);
+        createOtherMultiVhostTopicQueue(rabbitAdmin);
+        createThirdMultiVhostTopicQueue(rabbitAdmin);
+        createBindingMultiVhostQueueTopic(rabbitAdmin);
+        createBindingOtherMultiVhostQueueTopic(rabbitAdmin);
+        createBindingThirdMultiVhostQueueTopic(rabbitAdmin);
     }
 
     private void createTopicExchange(RabbitAdmin rabbitAdmin) {
         rabbitAdmin.declareExchange(ExchangeBuilder
-                .topicExchange(ADMIN_LISTEN_TOPIC_EXCHANGE)
+                .topicExchange(MULTI_VHOST_TOPIC_EXCHANGE)
                 .build());
     }
 
-    private void createBindingAdminListenQueueTopic(RabbitAdmin rabbitAdmin) {
-        rabbitAdmin.declareBinding(new Binding(ADMIN_LISTEN_TOPIC_QUEUE,
+    private void createBindingMultiVhostQueueTopic(RabbitAdmin rabbitAdmin) {
+        rabbitAdmin.declareBinding(new Binding(MULTI_VHOST_TOPIC_QUEUE,
                 Binding.DestinationType.QUEUE,
-                ADMIN_LISTEN_TOPIC_EXCHANGE,
+                MULTI_VHOST_TOPIC_EXCHANGE,
                 BINDING_EXAMPLE,
                 null));
     }
 
-    private void createBindingOtherAdminListenQueueTopic(RabbitAdmin rabbitAdmin) {
-        rabbitAdmin.declareBinding(new Binding(OTHER_ADMIN_LISTEN_TOPIC_QUEUE,
+    private void createBindingOtherMultiVhostQueueTopic(RabbitAdmin rabbitAdmin) {
+        rabbitAdmin.declareBinding(new Binding(OTHER_MULTI_VHOST_TOPIC_QUEUE,
                 Binding.DestinationType.QUEUE,
-                ADMIN_LISTEN_TOPIC_EXCHANGE,
+                MULTI_VHOST_TOPIC_EXCHANGE,
                 BINDING_OTHER_EXAMPLE,
                 null));
     }
 
-    private void createBindingThirdAdminListenQueueTopic(RabbitAdmin rabbitAdmin) {
-        rabbitAdmin.declareBinding(new Binding(THIRD_ADMIN_LISTEN_TOPIC_QUEUE,
+    private void createBindingThirdMultiVhostQueueTopic(RabbitAdmin rabbitAdmin) {
+        rabbitAdmin.declareBinding(new Binding(THIRD_MULTI_VHOST_TOPIC_QUEUE,
                 Binding.DestinationType.QUEUE,
-                ADMIN_LISTEN_TOPIC_EXCHANGE,
+                MULTI_VHOST_TOPIC_EXCHANGE,
                 BINDING_THIRD,
                 null));
     }
 
-    private void createAdminListenTopicQueue(RabbitAdmin rabbitAdmin) {
+    private void createMultiVhostTopicQueue(RabbitAdmin rabbitAdmin) {
         rabbitAdmin.declareQueue(QueueBuilder
-                .durable(ADMIN_LISTEN_TOPIC_QUEUE)
+                .durable(MULTI_VHOST_TOPIC_QUEUE)
                 .build());
     }
 
-    private void createOtherAdminListenTopicQueue(RabbitAdmin rabbitAdmin) {
+    private void createOtherMultiVhostTopicQueue(RabbitAdmin rabbitAdmin) {
         rabbitAdmin.declareQueue(QueueBuilder
-                .durable(OTHER_ADMIN_LISTEN_TOPIC_QUEUE)
+                .durable(OTHER_MULTI_VHOST_TOPIC_QUEUE)
                 .build());
     }
 
-    private void createThirdAdminListenTopicQueue(RabbitAdmin rabbitAdmin) {
+    private void createThirdMultiVhostTopicQueue(RabbitAdmin rabbitAdmin) {
         rabbitAdmin.declareQueue(QueueBuilder
-                .durable(THIRD_ADMIN_LISTEN_TOPIC_QUEUE)
+                .durable(THIRD_MULTI_VHOST_TOPIC_QUEUE)
                 .build());
     }
 }

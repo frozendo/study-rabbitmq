@@ -13,10 +13,10 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class FanoutConfig {
 
-    public static final String ADMIN_LISTEN_FANOUT_EXCHANGE = "multi-vhost-fanout-exchange";
+    public static final String MULTI_VHOST_FANOUT_EXCHANGE = "multi-vhost-fanout-exchange";
 
-    public static final String ADMIN_LISTEN_FANOUT_QUEUE = "multi-vhost-fanout-queue";
-    public static final String OTHER_ADMIN_LISTEN_FANOUT_QUEUE = "other-multi-vhost-fanout-queue";
+    public static final String MULTI_VHOST_FANOUT_QUEUE = "multi-vhost-fanout-queue";
+    public static final String OTHER_MULTI_VHOST_FANOUT_QUEUE = "other-multi-vhost-fanout-queue";
 
     @Autowired
     private ConnectionFactory connectionFactory;
@@ -25,43 +25,43 @@ public class FanoutConfig {
     public void createFanoutElements() {
         var rabbitAdmin = new RabbitAdmin(connectionFactory);
         createFanoutExchange(rabbitAdmin);
-        createAdminListenFanoutQueue(rabbitAdmin);
-        createOtherAdminListenFanoutQueue(rabbitAdmin);
-        createBindingAdminListenQueueFanout(rabbitAdmin);
-        createBindingOtherAdminListenQueueFanout(rabbitAdmin);
+        createMultiVhostFanoutQueue(rabbitAdmin);
+        createOtherMultiVhostFanoutQueue(rabbitAdmin);
+        createBindingMultiVhostQueueFanout(rabbitAdmin);
+        createBindingOtherMultiVhostQueueFanout(rabbitAdmin);
     }
 
     private void createFanoutExchange(RabbitAdmin rabbitAdmin) {
         rabbitAdmin.declareExchange(ExchangeBuilder
-                .fanoutExchange(ADMIN_LISTEN_FANOUT_EXCHANGE)
+                .fanoutExchange(MULTI_VHOST_FANOUT_EXCHANGE)
                 .build());
     }
 
-    private void createBindingAdminListenQueueFanout(RabbitAdmin rabbitAdmin) {
-        rabbitAdmin.declareBinding(new Binding(ADMIN_LISTEN_FANOUT_QUEUE,
+    private void createBindingMultiVhostQueueFanout(RabbitAdmin rabbitAdmin) {
+        rabbitAdmin.declareBinding(new Binding(MULTI_VHOST_FANOUT_QUEUE,
                 Binding.DestinationType.QUEUE,
-                ADMIN_LISTEN_FANOUT_EXCHANGE,
+                MULTI_VHOST_FANOUT_EXCHANGE,
                 "",
                 null));
     }
 
-    private void createBindingOtherAdminListenQueueFanout(RabbitAdmin rabbitAdmin) {
-        rabbitAdmin.declareBinding(new Binding(OTHER_ADMIN_LISTEN_FANOUT_QUEUE,
+    private void createBindingOtherMultiVhostQueueFanout(RabbitAdmin rabbitAdmin) {
+        rabbitAdmin.declareBinding(new Binding(OTHER_MULTI_VHOST_FANOUT_QUEUE,
                 Binding.DestinationType.QUEUE,
-                ADMIN_LISTEN_FANOUT_EXCHANGE,
+                MULTI_VHOST_FANOUT_EXCHANGE,
                 "",
                 null));
     }
 
-    private void createAdminListenFanoutQueue(RabbitAdmin rabbitAdmin) {
+    private void createMultiVhostFanoutQueue(RabbitAdmin rabbitAdmin) {
         rabbitAdmin.declareQueue(QueueBuilder
-                .durable(ADMIN_LISTEN_FANOUT_QUEUE)
+                .durable(MULTI_VHOST_FANOUT_QUEUE)
                 .build());
     }
 
-    private void createOtherAdminListenFanoutQueue(RabbitAdmin rabbitAdmin) {
+    private void createOtherMultiVhostFanoutQueue(RabbitAdmin rabbitAdmin) {
         rabbitAdmin.declareQueue(QueueBuilder
-                .durable(OTHER_ADMIN_LISTEN_FANOUT_QUEUE)
+                .durable(OTHER_MULTI_VHOST_FANOUT_QUEUE)
                 .build());
     }
 }

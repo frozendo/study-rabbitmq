@@ -31,13 +31,13 @@ public class MultiHostController {
     @PostMapping
     public void executeExample(@RequestBody Product product) {
         LOG.info("sending message for = multi-vhost-fanout-exchange");
-        primaryRabbitTemplate.convertAndSend(FanoutConfig.ADMIN_LISTEN_FANOUT_EXCHANGE, "", product);
+        primaryRabbitTemplate.convertAndSend(FanoutConfig.MULTI_VHOST_FANOUT_EXCHANGE, "", product);
     }
 
     @PostMapping("/{routingKey}")
     public void executeExample(@PathVariable("routingKey") String routingKey,
                                               @RequestBody Product product) {
         LOG.info("sending message for = multi-vhost-topic-exchange with routing key = {}", routingKey);
-        topicRabbitTemplate.convertAndSend(TopicConfig.ADMIN_LISTEN_TOPIC_EXCHANGE, routingKey, product);
+        topicRabbitTemplate.convertAndSend(TopicConfig.MULTI_VHOST_TOPIC_EXCHANGE, routingKey, product);
     }
 }
