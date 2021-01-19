@@ -1,6 +1,6 @@
 spring:
   application:
-    name: rabbitmq-consumer-multiple-vhost
+    name: rabbitmq-multiple-vhost-consumer
   rabbitmq:
 
     host: localhost
