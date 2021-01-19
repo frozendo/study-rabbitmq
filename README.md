@@ -159,7 +159,7 @@ O Rabbit também tem uma fila default para esse tipo de exchange, chamada **"amq
 
 ![Topic Exchange example](images/topic-exchange-example.gif "Topic Exchange Example")
 
-**_Fanout_**
+#### Fanout
 
 **Fanout Exchange** é o tipo mais simples, pois, encaminha a mensagem recebida para todas as filas que estão conectadas a ela, desconsiderando qualquer routing key. 
 Por esse motivo, mensagens sem routing key não são descartadas nesse tipo de exchange, como acontece com os dois anteriores.
@@ -304,14 +304,14 @@ Após isso a mensagem é encaminhada para a fila que irá dar inicio ao processo
 
 ## Referencias 
 
-[Documentação Oficial](https://www.rabbitmq.com/documentation.html)
+* [Documentação Oficial](https://www.rabbitmq.com/documentation.html)
 
-[RabbitMQ Parte I - Iudarigun](https://medium.com/dev-cave/rabbit-mq-parte-i-c15e5f89d94)
-[RabbitMQ Parte II - Iudarigun](https://medium.com/dev-cave/rabbitmq-parte-ii-fa61a469ba2)
-[RabbitMQ Extras - Iudarigun](https://medium.com/dev-cave/rabbit-mq-extras-efa038e53db1)
+* [RabbitMQ Parte I - Iudarigun](https://medium.com/dev-cave/rabbit-mq-parte-i-c15e5f89d94)
+* [RabbitMQ Parte II - Iudarigun](https://medium.com/dev-cave/rabbitmq-parte-ii-fa61a469ba2)
+* [RabbitMQ Extras - Iudarigun](https://medium.com/dev-cave/rabbit-mq-extras-efa038e53db1)
 
-[RabbitMQ For Beginners: Part 1 - CloudAMQP](https://www.cloudamqp.com/blog/2015-05-18-part1-rabbitmq-for-beginners-what-is-rabbitmq.html)
-[RabbitMQ For Beginners: Part 4 - CloudAMQP](https://www.cloudamqp.com/blog/2015-09-03-part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html)
+* [RabbitMQ For Beginners: Part 1 - CloudAMQP](https://www.cloudamqp.com/blog/2015-05-18-part1-rabbitmq-for-beginners-what-is-rabbitmq.html)
+* [RabbitMQ For Beginners: Part 4 - CloudAMQP](https://www.cloudamqp.com/blog/2015-09-03-part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html)
 
-[Try RabbitMQ](http://tryrabbitmq.com/)
+* [Try RabbitMQ](http://tryrabbitmq.com/)
 
