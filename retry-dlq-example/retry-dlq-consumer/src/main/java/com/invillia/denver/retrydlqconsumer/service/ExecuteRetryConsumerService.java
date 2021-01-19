@@ -21,10 +21,10 @@ import java.util.Objects;
 @Service
 public class ExecuteRetryConsumerService {
 
-    private Logger LOG = LoggerFactory.getLogger(ExecuteRetryConsumerService.class);
 
-    private final List<String> EXPIRATIONS = List.of("1000", "2000", "4000", "6000");
+    private static final List<String> EXPIRATIONS = List.of("1000", "2000", "4000", "6000");
 
+    private final Logger logger = LoggerFactory.getLogger(ExecuteRetryConsumerService.class);
     private final ObjectMapper objectMapper;
     private final RabbitTemplate rabbitTemplate;
 
@@ -38,7 +38,8 @@ public class ExecuteRetryConsumerService {
     public void sampleFanoutQueueConsumer(Message message) throws IOException {
         var product = objectMapper.readValue(message.getBody(), Product.class);
         var routingKey = message.getMessageProperties().getReceivedRoutingKey();
-        LOG.info(QueueConstants.LOG_MESSAGE_X_DEATH,
+
+        logger.info(QueueConstants.LOG_MESSAGE_X_DEATH,
                 QueueConstants.LOOP_EXAMPLE_QUEUE, routingKey,
                 getDeathValue(message.getMessageProperties().getHeaders()), product);
 

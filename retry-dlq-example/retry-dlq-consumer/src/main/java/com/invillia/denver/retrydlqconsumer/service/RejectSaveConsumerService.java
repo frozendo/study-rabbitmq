@@ -15,8 +15,7 @@ import java.io.IOException;
 @Service
 public class RejectSaveConsumerService {
 
-    private Logger LOG = LoggerFactory.getLogger(RejectSaveConsumerService.class);
-
+    private final Logger logger = LoggerFactory.getLogger(RejectSaveConsumerService.class);
     private final ObjectMapper objectMapper;
 
     public RejectSaveConsumerService(ObjectMapper objectMapper) {
@@ -27,7 +26,7 @@ public class RejectSaveConsumerService {
     public void sampleFanoutQueueConsumer(Message message) throws IOException {
         var product = objectMapper.readValue(message.getBody(), Product.class);
         var routingKey = message.getMessageProperties().getReceivedRoutingKey();
-        LOG.info(QueueConstants.LOG_MESSAGE_ROUTING_KEY, QueueConstants.REJECT_SAVE_QUEUE, routingKey, product);
+        logger.info(QueueConstants.LOG_MESSAGE_ROUTING_KEY, QueueConstants.REJECT_SAVE_QUEUE, routingKey, product);
         throw new AmqpRejectAndDontRequeueException("Error Loop Message");
     }
 }

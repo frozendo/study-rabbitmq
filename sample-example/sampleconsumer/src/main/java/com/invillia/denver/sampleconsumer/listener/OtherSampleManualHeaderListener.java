@@ -14,8 +14,7 @@ import java.io.IOException;
 @Service
 public class OtherSampleManualHeaderListener implements MessageListener {
 
-    private Logger LOG = LoggerFactory.getLogger(OtherSampleManualHeaderListener.class);
-
+    private final Logger logger = LoggerFactory.getLogger(OtherSampleManualHeaderListener.class);
     private final ObjectMapper objectMapper;
 
     public OtherSampleManualHeaderListener(ObjectMapper objectMapper) {
@@ -27,10 +26,10 @@ public class OtherSampleManualHeaderListener implements MessageListener {
         try {
             var product = objectMapper.readValue(message.getBody(), Product.class);
             var routingKey = message.getMessageProperties().getReceivedRoutingKey();
-            LOG.info(QueueConstants.LOG_MESSAGE_ROUTING_KEY,
+            logger.info(QueueConstants.LOG_MESSAGE_ROUTING_KEY,
                     QueueConstants.OTHER_SAMPLE_MANUAL_HEADER_QUEUE, routingKey, product);
         } catch (IOException e) {
-            LOG.error("Error to consume message", e);
+            logger.error("Error to consume message", e);
         }
 
     }

@@ -14,8 +14,7 @@ import java.io.IOException;
 @Service
 public class LoopExampleConsumerService {
 
-    private Logger LOG = LoggerFactory.getLogger(LoopExampleConsumerService.class);
-
+    private final Logger logger = LoggerFactory.getLogger(LoopExampleConsumerService.class);
     private final ObjectMapper objectMapper;
 
     public LoopExampleConsumerService(ObjectMapper objectMapper) {
@@ -26,7 +25,7 @@ public class LoopExampleConsumerService {
     public void sampleFanoutQueueConsumer(Message message) throws IOException, InterruptedException {
         var product = objectMapper.readValue(message.getBody(), Product.class);
         var routingKey = message.getMessageProperties().getReceivedRoutingKey();
-        LOG.info(QueueConstants.LOG_MESSAGE_ROUTING_KEY, QueueConstants.LOOP_EXAMPLE_QUEUE, routingKey, product);
+        logger.info(QueueConstants.LOG_MESSAGE_ROUTING_KEY, QueueConstants.LOOP_EXAMPLE_QUEUE, routingKey, product);
 
         Thread.sleep(5000);
         throw new RuntimeException("Error Loop Message");

@@ -55,8 +55,14 @@ public class ExecuteRetryConfig {
     }
 
     private void createExecuteRetryDelayed(RabbitAdmin rabbitAdmin) {
+        Map<String, Object> args = Map.of(
+                QueueConstants.X_DEAD_LETTER_EXCHANGE, QueueConstants.RETRY_DIRECT_EXCHANGE,
+                QueueConstants.X_DEAD_LETTER_ROUTING_KEY, QueueConstants.BINDING_EXECUTE_QUEUE
+        );
+
         rabbitAdmin.declareQueue(QueueBuilder
                 .durable(QueueConstants.EXECUTE_RETRY_DELAYED)
+                .withArguments(args)
                 .build());
     }
 

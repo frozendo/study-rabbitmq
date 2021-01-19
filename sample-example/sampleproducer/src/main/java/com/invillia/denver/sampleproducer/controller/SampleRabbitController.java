@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rabbit")
 public class SampleRabbitController {
 
-    private Logger LOG = LoggerFactory.getLogger(SampleRabbitController.class);
-
+    private Logger logger = LoggerFactory.getLogger(SampleRabbitController.class);
     private final RabbitTemplate rabbitTemplate;
 
     public SampleRabbitController(RabbitTemplate rabbitTemplate) {
@@ -28,7 +27,7 @@ public class SampleRabbitController {
                                @PathVariable("routingKey") String routingKey,
                                @RequestBody Product product) {
 
-        LOG.info("sending message for = {} with routing key = {}", exchangeName, routingKey);
+        logger.info("sending message for = {} with routing key = {}", exchangeName, routingKey);
         rabbitTemplate.convertAndSend(exchangeName, routingKey, product);
 
     }
@@ -38,7 +37,7 @@ public class SampleRabbitController {
                                      @PathVariable("type") String type,
                                      @RequestBody Product product) {
 
-        LOG.info("sending message for = header-example-exchange, with test = {}, with type = {}", test, type);
+        logger.info("sending message for = header-example-exchange, with test = {}, with type = {}", test, type);
         rabbitTemplate.convertAndSend(HeaderConfig.SAMPLE_MANUAL_HEADER_EXCHANGE, "", product, m -> {
             m.getMessageProperties().getHeaders().put(HeaderConfig.TEST_HEADER_KEY, test);
             m.getMessageProperties().getHeaders().put(HeaderConfig.TYPE_HEADER_KEY, type);

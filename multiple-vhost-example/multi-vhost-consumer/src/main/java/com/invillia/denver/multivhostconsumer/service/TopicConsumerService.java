@@ -21,8 +21,7 @@ public class TopicConsumerService {
 
     public static final String LOG_MESSAGE = "Consume QUEUE {}, with ROUTING_KEY = {}, with VALUE = {}";
 
-    private Logger LOG = LoggerFactory.getLogger(TopicConsumerService.class);
-
+    private final Logger logger = LoggerFactory.getLogger(TopicConsumerService.class);
     private final ObjectMapper objectMapper;
 
     public TopicConsumerService(ObjectMapper objectMapper) {
@@ -31,37 +30,22 @@ public class TopicConsumerService {
 
     @RabbitListener(queues = MULTI_VHOST_TOPIC_QUEUE, containerFactory = TOPIC_LISTENER_CONTAINER)
     public void multiVhostTopicQueueConsumer(Message message) throws IOException {
-        try {
-            var product = objectMapper.readValue(message.getBody(), Product.class);
-            var routingKey = message.getMessageProperties().getReceivedRoutingKey();
-            LOG.info(LOG_MESSAGE, MULTI_VHOST_TOPIC_QUEUE, routingKey, product);
-        } catch (IOException e) {
-            LOG.error("Error to consume message", e);
-            throw e;
-        }
+        var product = objectMapper.readValue(message.getBody(), Product.class);
+        var routingKey = message.getMessageProperties().getReceivedRoutingKey();
+        logger.info(LOG_MESSAGE, MULTI_VHOST_TOPIC_QUEUE, routingKey, product);
     }
 
     @RabbitListener(queues = OTHER_MULTI_VHOST_TOPIC_QUEUE, containerFactory = TOPIC_LISTENER_CONTAINER)
     public void otherTopicQueueConsumer(Message message) throws IOException {
-        try {
-            var product = objectMapper.readValue(message.getBody(), Product.class);
-            var routingKey = message.getMessageProperties().getReceivedRoutingKey();
-            LOG.info(LOG_MESSAGE, OTHER_MULTI_VHOST_TOPIC_QUEUE, routingKey, product);
-        } catch (IOException e) {
-            LOG.error("Error to consume message", e);
-            throw e;
-        }
+        var product = objectMapper.readValue(message.getBody(), Product.class);
+        var routingKey = message.getMessageProperties().getReceivedRoutingKey();
+        logger.info(LOG_MESSAGE, OTHER_MULTI_VHOST_TOPIC_QUEUE, routingKey, product);
     }
 
     @RabbitListener(queues = THIRD_MULTI_VHOST_TOPIC_QUEUE, containerFactory = TOPIC_LISTENER_CONTAINER)
     public void thirdTopicQueueConsumer(Message message) throws IOException {
-        try {
-            var product = objectMapper.readValue(message.getBody(), Product.class);
-            var routingKey = message.getMessageProperties().getReceivedRoutingKey();
-            LOG.info(LOG_MESSAGE, THIRD_MULTI_VHOST_TOPIC_QUEUE, routingKey, product);
-        } catch (IOException e) {
-            LOG.error("Error to consume message", e);
-            throw e;
-        }
+        var product = objectMapper.readValue(message.getBody(), Product.class);
+        var routingKey = message.getMessageProperties().getReceivedRoutingKey();
+        logger.info(LOG_MESSAGE, THIRD_MULTI_VHOST_TOPIC_QUEUE, routingKey, product);
     }
 }

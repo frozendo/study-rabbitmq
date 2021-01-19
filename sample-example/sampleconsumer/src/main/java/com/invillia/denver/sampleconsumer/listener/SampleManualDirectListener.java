@@ -14,8 +14,7 @@ import java.io.IOException;
 @Service
 public class SampleManualDirectListener implements MessageListener {
 
-    private Logger LOG = LoggerFactory.getLogger(SampleManualDirectListener.class);
-
+    private final Logger logger = LoggerFactory.getLogger(SampleManualDirectListener.class);
     private final ObjectMapper objectMapper;
 
     public SampleManualDirectListener(ObjectMapper objectMapper) {
@@ -27,9 +26,9 @@ public class SampleManualDirectListener implements MessageListener {
         try {
             var product = objectMapper.readValue(message.getBody(), Product.class);
             var routingKey = message.getMessageProperties().getReceivedRoutingKey();
-            LOG.info(QueueConstants.LOG_MESSAGE_ROUTING_KEY, QueueConstants.SAMPLE_MANUAL_DIRECT_QUEUE, routingKey, product);
+            logger.info(QueueConstants.LOG_MESSAGE_ROUTING_KEY, QueueConstants.SAMPLE_MANUAL_DIRECT_QUEUE, routingKey, product);
         } catch (IOException e) {
-            LOG.error("Error to consume message", e);
+            logger.error("Error to consume message", e);
         }
 
     }

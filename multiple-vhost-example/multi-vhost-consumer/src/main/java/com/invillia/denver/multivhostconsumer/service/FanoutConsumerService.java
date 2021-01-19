@@ -13,6 +13,7 @@ import java.io.IOException;
 @Service
 public class FanoutConsumerService {
 
+
     public static final String MULTI_VHOST_FANOUT_QUEUE = "multi-vhost-fanout-queue";
     public static final String OTHER_MULTI_VHOST_FANOUT_QUEUE = "other-multi-vhost-fanout-queue";
 
@@ -20,8 +21,7 @@ public class FanoutConsumerService {
     
     public static final String LOG_MESSAGE = "Consume QUEUE {}, with VALUE = {}";
 
-    private Logger LOG = LoggerFactory.getLogger(FanoutConsumerService.class);
-
+    private final Logger logger = LoggerFactory.getLogger(FanoutConsumerService.class);
     private final ObjectMapper objectMapper;
 
     public FanoutConsumerService(ObjectMapper objectMapper) {
@@ -30,23 +30,13 @@ public class FanoutConsumerService {
 
     @RabbitListener(queues = MULTI_VHOST_FANOUT_QUEUE, containerFactory = PRIMARY_LISTENER_CONTAINER)
     public void multiVhostFanoutQueueConsumer(Message message) throws IOException {
-        try {
-            var product = objectMapper.readValue(message.getBody(), Product.class);
-            LOG.info(LOG_MESSAGE, MULTI_VHOST_FANOUT_QUEUE, product);
-        } catch (IOException e) {
-            LOG.error("Error to consume message", e);
-            throw e;
-        }
+        var product = objectMapper.readValue(message.getBody(), Product.class);
+        logger.info(LOG_MESSAGE, MULTI_VHOST_FANOUT_QUEUE, product);
     }
 
     @RabbitListener(queues = OTHER_MULTI_VHOST_FANOUT_QUEUE, containerFactory = PRIMARY_LISTENER_CONTAINER)
     public void otherFanoutQueueConsumer(Message message) throws IOException {
-        try {
-            var product = objectMapper.readValue(message.getBody(), Product.class);
-            LOG.info(LOG_MESSAGE, OTHER_MULTI_VHOST_FANOUT_QUEUE, product);
-        } catch (IOException e) {
-            LOG.error("Error to consume message", e);
-            throw e;
-        }
+        var product = objectMapper.readValue(message.getBody(), Product.class);
+        logger.info(LOG_MESSAGE, OTHER_MULTI_VHOST_FANOUT_QUEUE, product);
     }
 }

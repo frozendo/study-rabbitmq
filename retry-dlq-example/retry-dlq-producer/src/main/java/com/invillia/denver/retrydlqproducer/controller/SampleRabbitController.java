@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rabbit")
 public class SampleRabbitController {
 
-    private Logger LOG = LoggerFactory.getLogger(SampleRabbitController.class);
-
+    private final Logger logger = LoggerFactory.getLogger(SampleRabbitController.class);
     private final RabbitTemplate rabbitTemplate;
 
     public SampleRabbitController(RabbitTemplate rabbitTemplate) {
@@ -27,7 +26,7 @@ public class SampleRabbitController {
     public void executeExample(@PathVariable("routingKey") String routingKey,
                                @RequestBody Product product) {
 
-        LOG.info("sending message for = {} with routing key = {}", QueueConstants.RETRY_DIRECT_EXCHANGE, routingKey);
+        logger.info("sending message for = {} with routing key = {}", QueueConstants.RETRY_DIRECT_EXCHANGE, routingKey);
         rabbitTemplate.convertAndSend(QueueConstants.RETRY_DIRECT_EXCHANGE, routingKey, product);
 
     }
