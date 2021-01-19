@@ -300,3 +300,18 @@ Assim o fluxo ficaria da seguinte forma:
 Em alguns cenários talvez faça sentido utilizar a _Delay Queue_ como "fila principal". 
 Por exemplo, quando queremos agendar um processo para rodar após determinado tempo, podemos utilizar uma _Delay Queue_, que irá armazena a mensagem até que o TTL termine. 
 Após isso a mensagem é encaminhada para a fila que irá dar inicio ao processo.
+
+
+## Referencias 
+
+[Documentação Oficial](https://www.rabbitmq.com/documentation.html)
+
+[RabbitMQ Parte I - Iudarigun](https://medium.com/dev-cave/rabbit-mq-parte-i-c15e5f89d94)
+[RabbitMQ Parte II - Iudarigun](https://medium.com/dev-cave/rabbitmq-parte-ii-fa61a469ba2)
+[RabbitMQ Extras - Iudarigun](https://medium.com/dev-cave/rabbit-mq-extras-efa038e53db1)
+
+[RabbitMQ For Beginners: Part 1 - CloudAMQP](https://www.cloudamqp.com/blog/2015-05-18-part1-rabbitmq-for-beginners-what-is-rabbitmq.html)
+[RabbitMQ For Beginners: Part 4 - CloudAMQP](https://www.cloudamqp.com/blog/2015-09-03-part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html)
+
+[Try RabbitMQ](http://tryrabbitmq.com/)
+

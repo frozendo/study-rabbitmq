@@ -66,6 +66,7 @@ public class RabbitConfig {
     }
 
     @Bean
+    @Primary
     public RabbitTemplate primaryRabbitTemplate() {
         var rabbitTemplate = new RabbitTemplate(primaryConnectionFactory());
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
