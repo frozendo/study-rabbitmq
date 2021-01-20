@@ -314,4 +314,3 @@ Após isso a mensagem é encaminhada para a fila que irá dar inicio ao processo
 * [RabbitMQ For Beginners: Part 4 - CloudAMQP](https://www.cloudamqp.com/blog/2015-09-03-part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html)
 
 * [Try RabbitMQ](http://tryrabbitmq.com/)
-
