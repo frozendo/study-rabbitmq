@@ -1,14 +1,16 @@
-package com.frozendo.learnrabbit.domain;
+package com.frozendo.rabbit.sample.domain.enums;
 
 public enum TopicEnum {
 
     JAVA_TOPIC_PRODUCT_EX("java-topic-product-ex"),
-    PRODUCT_REGISTER_QUEUE("product-register-queue"),
-    PRODUCT_REGISTER_SPORT_QUEUE("product-register-sport-queue"),
-    PRODUCT_REGISTER_ELECTRONIC_QUEUE("product-register-electronic-queue"),
+    PRODUCT_REGISTER_QUEUE("java-topic-register-queue"),
+    SPORT_DEPARTMENT_QUEUE("java-topic-sport-department-queue"),
+    PROMOTION_QUEUE("java-topic-promotion-queue"),
+
     DEPARTMENT_BINDING_KEY("department.#"),
     DEPARTMENT_SPORT_BINDING_KEY("department.sport.#"),
     DEPARTMENT_PROMOTION_BINDING_KEY("department.*.promotion"),
+
     GENERAL_ROUTING_KEY("department."),
     SPORT_ROUTING_KEY("department.sport."),
     SPORT_PROMOTION_ROUTING_KEY("department.sport.promotion"),
@@ -16,7 +18,7 @@ public enum TopicEnum {
 
     private String value;
 
-    private TopicEnum(String value) {
+    TopicEnum(String value) {
         this.value = value;
     }
 

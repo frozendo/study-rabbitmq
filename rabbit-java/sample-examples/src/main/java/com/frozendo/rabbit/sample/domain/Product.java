@@ -1,4 +1,4 @@
-package com.frozendo.learnrabbit.domain;
+package com.frozendo.rabbit.sample.domain;
 
 import org.apache.commons.lang3.SerializationUtils;
 
@@ -11,6 +11,13 @@ public class Product implements Serializable {
     private String name;
     private String department;
     private BigDecimal price;
+
+    public Product(Integer quantity, String name, String department, BigDecimal price) {
+        this.quantity = quantity;
+        this.name = name;
+        this.department = department;
+        this.price = price;
+    }
 
     public Integer getQuantity() {
         return quantity;

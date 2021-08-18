@@ -1,4 +1,4 @@
-package com.frozendo.learnrabbit.config;
+package com.frozendo.rabbit.sample.config;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -40,6 +40,8 @@ public class RabbitBaseConfig {
         try {
             DirectExchangeConfig.config(channel);
             TopicExchangeConfig.config(channel);
+            FanoutExchangeConfig.config(channel);
+            HeaderExchangeConfig.config(channel);
         } catch (IOException ex) {
             System.out.println("Rabbit exception");
             ex.printStackTrace();

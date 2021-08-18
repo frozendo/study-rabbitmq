@@ -1,7 +1,7 @@
-package com.frozendo.learnrabbit.controller;
+package com.frozendo.rabbit.sample.controller;
 
-import com.frozendo.learnrabbit.domain.MessageDTO;
-import com.frozendo.learnrabbit.producer.ProductProducerService;
+import com.frozendo.rabbit.sample.domain.MessageDTO;
+import com.frozendo.rabbit.sample.producer.ProductProducerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;

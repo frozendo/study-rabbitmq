@@ -1,4 +1,4 @@
-package com.frozendo.learnrabbit.domain;
+package com.frozendo.rabbit.sample.domain;
 
 public enum ExchangeTypeEnum {
     DIRECT,

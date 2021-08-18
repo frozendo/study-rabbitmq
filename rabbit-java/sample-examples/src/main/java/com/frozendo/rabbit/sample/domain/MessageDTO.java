@@ -1,4 +1,4 @@
-package com.frozendo.learnrabbit.domain;
+package com.frozendo.rabbit.sample.domain;
 
 import java.math.BigDecimal;
 
@@ -11,12 +11,10 @@ public class MessageDTO {
     private ExchangeTypeEnum exchangeType;
 
     public Product extractProduct() {
-        var product = new Product();
-        product.setQuantity(this.quantity);
-        product.setName(this.name);
-        product.setPrice(this.price);
-        product.setDepartment(this.department);
-        return product;
+        return new Product(this.quantity,
+                this.name,
+                this.department,
+                this.price);
     }
 
     public Integer getQuantity() {

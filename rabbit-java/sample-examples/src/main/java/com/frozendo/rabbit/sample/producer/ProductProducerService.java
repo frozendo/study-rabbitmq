@@ -1,10 +1,12 @@
-package com.frozendo.learnrabbit.producer;
+package com.frozendo.rabbit.sample.producer;
 
-import com.frozendo.learnrabbit.domain.ExchangeTypeEnum;
-import com.frozendo.learnrabbit.domain.MessageDTO;
-import com.frozendo.learnrabbit.service.DirectExchangeService;
-import com.frozendo.learnrabbit.service.ExchangeService;
-import com.frozendo.learnrabbit.service.TopicExchangeService;
+import com.frozendo.rabbit.sample.domain.ExchangeTypeEnum;
+import com.frozendo.rabbit.sample.domain.MessageDTO;
+import com.frozendo.rabbit.sample.service.DirectExchangeService;
+import com.frozendo.rabbit.sample.service.ExchangeService;
+import com.frozendo.rabbit.sample.service.FanoutExchangeService;
+import com.frozendo.rabbit.sample.service.HeaderExchangeService;
+import com.frozendo.rabbit.sample.service.TopicExchangeService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,10 @@ public class ProductProducerService {
             return applicationContext.getBean(DirectExchangeService.class);
         } else if (ExchangeTypeEnum.TOPIC.equals(exchangeType)) {
             return applicationContext.getBean(TopicExchangeService.class);
+        } else if (ExchangeTypeEnum.FANOUT.equals(exchangeType)) {
+            return applicationContext.getBean(FanoutExchangeService.class);
+        } else if (ExchangeTypeEnum.HEADER.equals(exchangeType)) {
+            return applicationContext.getBean(HeaderExchangeService.class);
         }
         return applicationContext.getBean(DirectExchangeService.class);
     }
