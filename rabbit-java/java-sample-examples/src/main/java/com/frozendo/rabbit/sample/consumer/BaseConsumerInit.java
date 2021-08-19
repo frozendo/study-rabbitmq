@@ -8,7 +8,7 @@ public class BaseConsumerInit {
 
     public static void init(DefaultConsumer consumer, String queue) {
         try {
-            consumer.getChannel().basicConsume(queue, false, queue.concat("-tag"), consumer);
+            consumer.getChannel().basicConsume(queue, false, queue.concat("-sample-tag"), consumer);
         } catch (IOException ex) {
             System.out.println("Rabbit error");
             ex.printStackTrace();
