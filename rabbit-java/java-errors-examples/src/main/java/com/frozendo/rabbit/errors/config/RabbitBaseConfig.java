@@ -1,5 +1,6 @@
-package com.frozendo.rabbit.sample.config;
+package com.frozendo.rabbit.errors.config;
 
+import com.frozendo.rabbit.errors.domain.enums.DlqEnum;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -38,6 +39,7 @@ public class RabbitBaseConfig {
 
     private void configRabbit() {
         try {
+            createApplicationDlq();
             DirectExchangeConfig.config(channel);
             TopicExchangeConfig.config(channel);
             FanoutExchangeConfig.config(channel);
@@ -65,6 +67,10 @@ public class RabbitBaseConfig {
             System.out.println("General exception");
             ex.printStackTrace();
         }
+    }
+
+    private void createApplicationDlq() throws IOException {
+        channel.exchangeDeclare(DlqEnum.JAVA_ERRORS_DLQ_EX.getValue(), "direct", true);
     }
 
 }

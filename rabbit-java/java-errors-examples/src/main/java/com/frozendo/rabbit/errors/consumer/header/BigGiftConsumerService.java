@@ -1,8 +1,8 @@
-package com.frozendo.rabbit.multi.consumer.header;
+package com.frozendo.rabbit.errors.consumer.header;
 
-import com.frozendo.rabbit.multi.config.HeaderExchangeConfig;
-import com.frozendo.rabbit.multi.consumer.BaseConsumerInit;
-import com.frozendo.rabbit.multi.domain.Product;
+import com.frozendo.rabbit.errors.config.RabbitBaseConfig;
+import com.frozendo.rabbit.errors.consumer.BaseConsumerInit;
+import com.frozendo.rabbit.errors.domain.Product;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static com.frozendo.rabbit.multi.domain.enums.HeaderEnum.BIG_GIFT_QUEUE;
+import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.BIG_GIFT_QUEUE;
 
 @Component
 public class BigGiftConsumerService extends DefaultConsumer {
 
     Logger log = LoggerFactory.getLogger(BigGiftConsumerService.class);
 
-    public BigGiftConsumerService() {
-        super(HeaderExchangeConfig.getChannel());
+    public BigGiftConsumerService(RabbitBaseConfig baseConfig) {
+        super(baseConfig.getChannel());
         BaseConsumerInit.init(this, BIG_GIFT_QUEUE.getValue());
     }
 
@@ -30,6 +30,13 @@ public class BigGiftConsumerService extends DefaultConsumer {
         var product = (Product) SerializationUtils.deserialize(body);
         log.info("queue {}, value read = {}", BIG_GIFT_QUEUE.getValue(), product);
         log.info("message routingKey = {}", envelope.getRoutingKey());
-        this.getChannel().basicAck(envelope.getDeliveryTag(), false);
+        var value = BaseConsumerInit.getRandomNumber();
+        if (value % 2 == 0) {
+            log.info("sending ack to rabbit");
+            this.getChannel().basicAck(envelope.getDeliveryTag(), false);
+        } else {
+            log.info("reject rabbit message");
+            this.getChannel().basicReject(envelope.getDeliveryTag(), false);
+        }
     }
 }

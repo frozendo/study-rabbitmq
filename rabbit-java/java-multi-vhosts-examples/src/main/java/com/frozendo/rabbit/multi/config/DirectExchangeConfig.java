@@ -40,7 +40,7 @@ public class DirectExchangeConfig {
     private void startConnection() throws IOException, TimeoutException {
         var factory = new ConnectionFactory();
         factory.setUsername("user-direct");
-        factory.setPassword("123");
+        factory.setPassword("test12");
         factory.setVirtualHost("/vdirect");
         connection = factory.newConnection();
         channel = connection.createChannel();

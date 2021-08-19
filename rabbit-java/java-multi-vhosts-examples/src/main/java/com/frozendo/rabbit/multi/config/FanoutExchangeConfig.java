@@ -36,7 +36,7 @@ public class FanoutExchangeConfig {
     private void startConnection() throws IOException, TimeoutException {
         var factory = new ConnectionFactory();
         factory.setUsername("user-fanout");
-        factory.setPassword("123");
+        factory.setPassword("test12");
         factory.setVirtualHost("/vfanout");
         connection = factory.newConnection();
         channel = connection.createChannel();

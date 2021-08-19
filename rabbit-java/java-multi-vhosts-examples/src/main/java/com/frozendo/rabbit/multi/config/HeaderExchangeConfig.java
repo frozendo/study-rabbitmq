@@ -37,7 +37,7 @@ public class HeaderExchangeConfig {
     private void startConnection() throws IOException, TimeoutException {
         var factory = new ConnectionFactory();
         factory.setUsername("user-header");
-        factory.setPassword("123");
+        factory.setPassword("test12");
         factory.setVirtualHost("/vheader");
         connection = factory.newConnection();
         channel = connection.createChannel();

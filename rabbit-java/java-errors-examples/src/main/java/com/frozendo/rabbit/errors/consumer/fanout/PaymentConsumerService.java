@@ -1,8 +1,8 @@
-package com.frozendo.rabbit.multi.consumer.fanout;
+package com.frozendo.rabbit.errors.consumer.fanout;
 
-import com.frozendo.rabbit.multi.config.FanoutExchangeConfig;
-import com.frozendo.rabbit.multi.consumer.BaseConsumerInit;
-import com.frozendo.rabbit.multi.domain.Product;
+import com.frozendo.rabbit.errors.config.RabbitBaseConfig;
+import com.frozendo.rabbit.errors.consumer.BaseConsumerInit;
+import com.frozendo.rabbit.errors.domain.Product;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static com.frozendo.rabbit.multi.domain.enums.FanoutEnum.PAYMENT_QUEUE;
+import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.PAYMENT_QUEUE;
 
 @Component
 public class PaymentConsumerService extends DefaultConsumer {
 
     Logger log = LoggerFactory.getLogger(PaymentConsumerService.class);
 
-    public PaymentConsumerService() {
-        super(FanoutExchangeConfig.getChannel());
+    public PaymentConsumerService(RabbitBaseConfig baseConfig) {
+        super(baseConfig.getChannel());
         BaseConsumerInit.init(this, PAYMENT_QUEUE.getValue());
     }
 
@@ -30,7 +30,14 @@ public class PaymentConsumerService extends DefaultConsumer {
         var product = (Product) SerializationUtils.deserialize(body);
         log.info("queue {}, value read = {}", PAYMENT_QUEUE.getValue(), product);
         log.info("message routingKey = {}", envelope.getRoutingKey());
-        this.getChannel().basicAck(envelope.getDeliveryTag(), false);
+        var value = BaseConsumerInit.getRandomNumber();
+        if (value % 2 == 0) {
+            log.info("sending ack to rabbit");
+            this.getChannel().basicAck(envelope.getDeliveryTag(), false);
+        } else {
+            log.info("reject rabbit message");
+            this.getChannel().basicReject(envelope.getDeliveryTag(), false);
+        }
     }
 
 }
