@@ -4,11 +4,15 @@ import com.frozendo.rabbit.sample.config.RabbitBaseConfig;
 import com.frozendo.rabbit.sample.domain.Product;
 import com.rabbitmq.client.AMQP;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Optional;
 
 public abstract class ExchangeService {
+
+    Logger logger = LoggerFactory.getLogger(ExchangeService.class);
 
     private final RabbitBaseConfig baseConfig;
 
@@ -26,6 +30,9 @@ public abstract class ExchangeService {
                 .orElse(StringUtils.EMPTY);
         var exchange = getExchange();
         var basicProperties = getBasicProperties(product);
+
+        logger.info("sending message to rabbit, exchange = {} routingKey = {}, product = {}", exchange, key, product);
+
         try {
             channel.basicPublish(exchange,
                     key,
