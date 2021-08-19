@@ -1,0 +1,12 @@
+version: "3.3"
+services:
+  rabbitmq-web:
+    hostname: rabbit-local
+    container_name: rabbit-local
+    image: rabbitmq:3.6-management
+    volumes:
+        - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+        - ./definitions.json:/etc/rabbitmq/definitions.json
+    ports:
+        - 5672:5672
+        - 15672:15672

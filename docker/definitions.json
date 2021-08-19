@@ -1,0 +1,122 @@
+{
+    "rabbit_version": "3.6.6",
+    "users": [
+        {
+            "name": "admin",
+            "password_hash": "kI3GCqW5JLMJa4iX1lo7X4D6XbYqlLgxIs30+P6tENUV2POR",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator"
+        },
+        {
+            "name": "user-topic",
+            "password_hash": "kI3GCqW5JLMJa4iX1lo7X4D6XbYqlLgxIs30+P6tENUV2POR",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management"
+        },
+        {
+            "name": "user-direct",
+            "password_hash": "kI3GCqW5JLMJa4iX1lo7X4D6XbYqlLgxIs30+P6tENUV2POR",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management"
+        },
+        {
+            "name": "user-header",
+            "password_hash": "kI3GCqW5JLMJa4iX1lo7X4D6XbYqlLgxIs30+P6tENUV2POR",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management"
+        },
+        {
+            "name": "user-fanout",
+            "password_hash": "kI3GCqW5JLMJa4iX1lo7X4D6XbYqlLgxIs30+P6tENUV2POR",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management"
+        }
+    ],
+    "vhosts": [
+     {
+        "name": "\/"
+     },
+     {
+        "name": "\/vtopic"
+     },
+     {
+        "name": "\/vdirect"
+     },
+     {
+        "name": "\/vheader"
+     },
+     {
+        "name": "\/vfanout"
+     }
+    ],
+    "permissions": [
+        {
+            "user": "admin",
+            "vhost": "\/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "admin",
+            "vhost": "\/vtopic",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "admin",
+            "vhost": "\/vdirect",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "admin",
+            "vhost": "\/vheader",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "admin",
+            "vhost": "\/vfanout",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "user-topic",
+            "vhost": "\/vtopic",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "user-direct",
+            "vhost": "\/vdirect",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "user-header",
+            "vhost": "\/vheader",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "user-fanout",
+            "vhost": "\/vfanout",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "parameters": [],
+    "policies": [],
+    "queues": [],
+    "exchanges": [],
+    "bindings": []
+   }
