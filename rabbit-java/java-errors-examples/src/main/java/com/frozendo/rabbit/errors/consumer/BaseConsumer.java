@@ -1,13 +1,15 @@
 package com.frozendo.rabbit.errors.consumer;
 
 import com.rabbitmq.client.DefaultConsumer;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Random;
 
-public class BaseConsumerInit {
+@Component
+public class BaseConsumer {
 
-    public static void init(DefaultConsumer consumer, String queue) {
+    public void init(DefaultConsumer consumer, String queue) {
         try {
             consumer.getChannel().basicConsume(queue, false, queue.concat("-errors-tag"), consumer);
         } catch (IOException ex) {
