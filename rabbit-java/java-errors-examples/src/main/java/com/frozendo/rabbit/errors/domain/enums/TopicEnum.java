@@ -7,6 +7,11 @@ public enum TopicEnum {
     SPORT_DEPARTMENT_QUEUE("java-errors-topic-sport-department-queue"),
     PROMOTION_QUEUE("java-errors-topic-promotion-queue"),
 
+
+    PRODUCT_REGISTER_DELAYED_QUEUE("java-errors-topic-register-delayed-queue"),
+    SPORT_DEPARTMENT_DELAYED_QUEUE("java-errors-topic-sport-department-delayed-queue"),
+    PROMOTION_DELAYED_QUEUE("java-errors-topic-promotion-delayed-queue"),
+
     PRODUCT_REGISTER_DLQ_QUEUE("java-errors-topic-register-dql-queue"),
     SPORT_DEPARTMENT_DLQ_QUEUE("java-errors-topic-sport-department-dql-queue"),
     PROMOTION_DLQ_QUEUE("java-errors-topic-promotion-dql-queue"),

@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.BIG_QUANTITY_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.BIG_QUANTITY_DLQ_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.JAVA_ERRORS_BIG_QUANTITY_DLQ_KEY;
 import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.JAVA_ERRORS_SMALL_QUANTITY_DLQ_KEY;
+import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.SMALL_QUANTITY_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.SMALL_QUANTITY_DLQ_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.SMALL_QUANTITY_KEY;
 import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.BIG_QUANTITY_KEY;
@@ -25,6 +27,7 @@ public class DirectExchangeConfig {
 
         createExchange(channel);
         createQueues(channel);
+        createDelayedQueues(channel);
         doBinding(channel);
     }
 
@@ -42,6 +45,18 @@ public class DirectExchangeConfig {
         smallQuantityArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
         smallQuantityArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_SMALL_QUANTITY_DLQ_KEY.getValue());
         channel.queueDeclare(SMALL_QUANTITY_QUEUE.getValue(), true, false, false, smallQuantityArgs);
+    }
+
+    private static void createDelayedQueues(Channel channel) throws IOException {
+        Map<String, Object> bigQuantityArgs = new HashMap<>();
+        bigQuantityArgs.put("x-dead-letter-exchange", JAVA_DIRECT_PRODUCT_EX.getValue());
+        bigQuantityArgs.put("x-dead-letter-routing-key", BIG_QUANTITY_KEY.getValue());
+        channel.queueDeclare(BIG_QUANTITY_DELAYED_QUEUE.getValue(), true, false, false, bigQuantityArgs);
+
+        Map<String, Object> smallQuantityArgs = new HashMap<>();
+        smallQuantityArgs.put("x-dead-letter-exchange", JAVA_DIRECT_PRODUCT_EX.getValue());
+        smallQuantityArgs.put("x-dead-letter-routing-key", SMALL_QUANTITY_KEY.getValue());
+        channel.queueDeclare(SMALL_QUANTITY_DELAYED_QUEUE.getValue(), true, false, false, smallQuantityArgs);
     }
 
     private static void createDlqQueues(Channel channel) throws IOException {

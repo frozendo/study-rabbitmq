@@ -1,7 +1,7 @@
 package com.frozendo.rabbit.errors.consumer.header;
 
 import com.frozendo.rabbit.errors.config.RabbitBaseConfig;
-import com.frozendo.rabbit.errors.consumer.BaseConsumerInit;
+import com.frozendo.rabbit.errors.consumer.BaseConsumer;
 import com.frozendo.rabbit.errors.domain.Product;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.DefaultConsumer;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.BIG_GIFT_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.BIG_GIFT_QUEUE;
 
 @Component
@@ -20,9 +21,12 @@ public class BigGiftConsumerService extends DefaultConsumer {
 
     Logger log = LoggerFactory.getLogger(BigGiftConsumerService.class);
 
-    public BigGiftConsumerService(RabbitBaseConfig baseConfig) {
+    private final BaseConsumer baseConsumer;
+
+    public BigGiftConsumerService(RabbitBaseConfig baseConfig, BaseConsumer baseConsumer) {
         super(baseConfig.getChannel());
-        BaseConsumerInit.init(this, BIG_GIFT_QUEUE.getValue());
+        this.baseConsumer = baseConsumer;
+        baseConsumer.init(this, BIG_GIFT_QUEUE.getValue());
     }
 
     @Override
@@ -30,13 +34,13 @@ public class BigGiftConsumerService extends DefaultConsumer {
         var product = (Product) SerializationUtils.deserialize(body);
         log.info("queue {}, value read = {}", BIG_GIFT_QUEUE.getValue(), product);
         log.info("message routingKey = {}", envelope.getRoutingKey());
-        var value = BaseConsumerInit.getRandomNumber();
+        var value = baseConsumer.getRandomNumber();
         if (value % 2 == 0) {
             log.info("sending ack to rabbit");
             this.getChannel().basicAck(envelope.getDeliveryTag(), false);
         } else {
-            log.info("reject rabbit message");
-            this.getChannel().basicReject(envelope.getDeliveryTag(), false);
+            baseConsumer.rejectOrRequeueMessage(this.getChannel(), product, properties,
+                    BIG_GIFT_DELAYED_QUEUE.getValue(), envelope.getDeliveryTag());
         }
     }
 }

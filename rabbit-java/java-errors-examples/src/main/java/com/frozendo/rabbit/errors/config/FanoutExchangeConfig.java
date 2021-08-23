@@ -8,12 +8,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.JAVA_ERRORS_BIG_QUANTITY_DLQ_KEY;
+import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.INVENTORY_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.INVENTORY_DLQ_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.INVENTORY_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.JAVA_ERRORS_INVENTORY_DLQ_KEY;
 import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.JAVA_ERRORS_PAYMENT_DLQ_KEY;
 import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.JAVA_FANOUT_PRODUCT_EX;
+import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.PAYMENT_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.PAYMENT_DLQ_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.PAYMENT_QUEUE;
 
@@ -25,6 +26,7 @@ public class FanoutExchangeConfig {
 
         createExchange(channel);
         createQueues(channel);
+        createDelayedQueues(channel);
         doBinding(channel);
     }
 
@@ -42,6 +44,18 @@ public class FanoutExchangeConfig {
         paymentArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
         paymentArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_PAYMENT_DLQ_KEY.getValue());
         channel.queueDeclare(PAYMENT_QUEUE.getValue(), true, false, false, paymentArgs);
+    }
+
+    private static void createDelayedQueues(Channel channel) throws IOException {
+        Map<String, Object> inventoryArgs = new HashMap<>();
+        inventoryArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
+        inventoryArgs.put("x-dead-letter-routing-key", INVENTORY_QUEUE.getValue());
+        channel.queueDeclare(INVENTORY_DELAYED_QUEUE.getValue(), true, false, false, inventoryArgs);
+
+        Map<String, Object> paymentArgs = new HashMap<>();
+        paymentArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
+        paymentArgs.put("x-dead-letter-routing-key", PAYMENT_QUEUE.getValue());
+        channel.queueDeclare(PAYMENT_DELAYED_QUEUE.getValue(), true, false, false, paymentArgs);
     }
 
     private static void createDlqQueues(Channel channel) throws IOException {

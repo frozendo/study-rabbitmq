@@ -7,6 +7,9 @@ public enum DirectEnum {
     BIG_QUANTITY_QUEUE("java-errors-direct-big-quantity-queue"),
     SMALL_QUANTITY_QUEUE("java-errors-direct-small-quantity-queue"),
 
+    BIG_QUANTITY_DELAYED_QUEUE("java-errors-direct-big-quantity-delayed-queue"),
+    SMALL_QUANTITY_DELAYED_QUEUE("java-errors-direct-small-quantity-delayed-queue"),
+
     BIG_QUANTITY_DLQ_QUEUE("java-errors-direct-big-quantity-dlq-queue"),
     SMALL_QUANTITY_DLQ_QUEUE("java-errors-direct-small-quantity-dlq-queue"),
 

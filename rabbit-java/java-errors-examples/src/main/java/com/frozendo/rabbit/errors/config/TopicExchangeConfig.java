@@ -2,6 +2,7 @@ package com.frozendo.rabbit.errors.config;
 
 import com.frozendo.rabbit.errors.domain.enums.DlqEnum;
 import com.rabbitmq.client.Channel;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,10 +15,13 @@ import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.JAVA_ERRORS_PROM
 import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.JAVA_ERRORS_REGISTER_DLQ_KEY;
 import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.JAVA_ERRORS_SPORT_DLQ_KEY;
 import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.JAVA_TOPIC_PRODUCT_EX;
+import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.PRODUCT_REGISTER_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.PRODUCT_REGISTER_DLQ_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.PRODUCT_REGISTER_QUEUE;
+import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.PROMOTION_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.PROMOTION_DLQ_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.PROMOTION_QUEUE;
+import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.SPORT_DEPARTMENT_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.SPORT_DEPARTMENT_DLQ_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.SPORT_DEPARTMENT_QUEUE;
 
@@ -29,6 +33,7 @@ public class TopicExchangeConfig {
 
         createExchange(channel);
         createQueues(channel);
+        createDelayedQueues(channel);
         doBinding(channel);
     }
 
@@ -51,6 +56,23 @@ public class TopicExchangeConfig {
         promotionArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
         promotionArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_PROMOTION_DLQ_KEY.getValue());
         channel.queueDeclare(PROMOTION_QUEUE.getValue(), true, false, false, promotionArgs);
+    }
+
+    private static void createDelayedQueues(Channel channel) throws IOException {
+        Map<String, Object> registerArgs = new HashMap<>();
+        registerArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
+        registerArgs.put("x-dead-letter-routing-key", PRODUCT_REGISTER_QUEUE.getValue());
+        channel.queueDeclare(PRODUCT_REGISTER_DELAYED_QUEUE.getValue(), true, false, false, registerArgs);
+
+        Map<String, Object> sportArgs = new HashMap<>();
+        sportArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
+        sportArgs.put("x-dead-letter-routing-key", SPORT_DEPARTMENT_QUEUE.getValue());
+        channel.queueDeclare(SPORT_DEPARTMENT_DELAYED_QUEUE.getValue(), true, false, false, sportArgs);
+
+        Map<String, Object> promotionArgs = new HashMap<>();
+        promotionArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
+        promotionArgs.put("x-dead-letter-routing-key", PROMOTION_QUEUE.getValue());
+        channel.queueDeclare(PROMOTION_DELAYED_QUEUE.getValue(), true, false, false, promotionArgs);
     }
 
     private static void createDlqQueues(Channel channel) throws IOException {

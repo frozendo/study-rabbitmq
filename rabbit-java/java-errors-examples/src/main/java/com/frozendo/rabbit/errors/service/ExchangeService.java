@@ -45,6 +45,6 @@ public abstract class ExchangeService {
             System.out.println("General exception");
             ex.printStackTrace();
         }
-    };
+    }
 
 }

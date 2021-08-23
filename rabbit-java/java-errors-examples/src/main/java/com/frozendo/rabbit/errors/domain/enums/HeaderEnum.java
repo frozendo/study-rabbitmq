@@ -7,6 +7,9 @@ public enum HeaderEnum {
     SMALL_GIFT_QUEUE("java-errors-header-small-gift-queue"),
     BIG_GIFT_QUEUE("java-errors-header-big-gift-queue"),
 
+    SMALL_GIFT_DELAYED_QUEUE("java-errors-header-small-gift-delayed-queue"),
+    BIG_GIFT_DELAYED_QUEUE("java-errors-header-big-gift-delayed-queue"),
+
     SMALL_GIFT_DLQ_QUEUE("java-errors-header-small-gift-dlq-queue"),
     BIG_GIFT_DLQ_QUEUE("java-errors-header-big-gift-dlq-queue"),
 

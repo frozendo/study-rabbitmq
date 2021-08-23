@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.BIG_GIFT_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.BIG_GIFT_DLQ_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.BIG_GIFT_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.JAVA_ERRORS_BIG_GIFT_DLQ_KEY;
@@ -15,6 +16,7 @@ import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.JAVA_ERRORS_SMA
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.JAVA_HEADER_PRODUCT_EX;
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.PRICE_HEADER;
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.QUANTITY_HEADER;
+import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.SMALL_GIFT_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.SMALL_GIFT_DLQ_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.SMALL_GIFT_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.X_MATCH_HEADER_KEY;
@@ -27,6 +29,7 @@ public class HeaderExchangeConfig {
 
         createExchange(channel);
         createQueues(channel);
+        createDelayedQueues(channel);
         doBinding(channel);
     }
 
@@ -44,6 +47,18 @@ public class HeaderExchangeConfig {
         smallGiftArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
         smallGiftArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_SMALL_GIFT_DLQ_KEY.getValue());
         channel.queueDeclare(SMALL_GIFT_QUEUE.getValue(), true, false, false, smallGiftArgs);
+    }
+
+    private static void createDelayedQueues(Channel channel) throws IOException {
+        Map<String, Object> bigGiftArgs = new HashMap<>();
+        bigGiftArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
+        bigGiftArgs.put("x-dead-letter-routing-key", BIG_GIFT_QUEUE.getValue());
+        channel.queueDeclare(BIG_GIFT_DELAYED_QUEUE.getValue(), true, false, false, bigGiftArgs);
+
+        Map<String, Object> smallGiftArgs = new HashMap<>();
+        smallGiftArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
+        smallGiftArgs.put("x-dead-letter-routing-key", SMALL_GIFT_QUEUE.getValue());
+        channel.queueDeclare(SMALL_GIFT_DELAYED_QUEUE.getValue(), true, false, false, smallGiftArgs);
     }
 
     private static void createDlqQueues(Channel channel) throws IOException {

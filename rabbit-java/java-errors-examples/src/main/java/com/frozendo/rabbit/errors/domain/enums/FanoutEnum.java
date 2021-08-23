@@ -6,6 +6,9 @@ public enum FanoutEnum {
     INVENTORY_QUEUE("java-errors-fanout-inventory-queue"),
     PAYMENT_QUEUE("java-errors-fanout-payment-queue"),
 
+    INVENTORY_DELAYED_QUEUE("java-errors-fanout-inventory-delayed-queue"),
+    PAYMENT_DELAYED_QUEUE("java-errors-fanout-payment-delayed-queue"),
+
     INVENTORY_DLQ_QUEUE("java-errors-fanout-inventory-dlq-queue"),
     PAYMENT_DLQ_QUEUE("java-errors-fanout-payment-dlq-queue"),
 

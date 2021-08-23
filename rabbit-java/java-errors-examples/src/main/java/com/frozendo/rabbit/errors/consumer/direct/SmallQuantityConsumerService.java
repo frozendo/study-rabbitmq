@@ -1,7 +1,7 @@
 package com.frozendo.rabbit.errors.consumer.direct;
 
 import com.frozendo.rabbit.errors.config.RabbitBaseConfig;
-import com.frozendo.rabbit.errors.consumer.BaseConsumerInit;
+import com.frozendo.rabbit.errors.consumer.BaseConsumer;
 import com.frozendo.rabbit.errors.domain.Product;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.DefaultConsumer;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.SMALL_QUANTITY_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.SMALL_QUANTITY_QUEUE;
 
 @Component
@@ -20,9 +21,12 @@ public class SmallQuantityConsumerService extends DefaultConsumer {
 
     Logger log = LoggerFactory.getLogger(SmallQuantityConsumerService.class);
 
-    public SmallQuantityConsumerService(RabbitBaseConfig baseConfig) {
+    private final BaseConsumer baseConsumer;
+
+    public SmallQuantityConsumerService(RabbitBaseConfig baseConfig, BaseConsumer baseConsumer) {
         super(baseConfig.getChannel());
-        BaseConsumerInit.init(this, SMALL_QUANTITY_QUEUE.getValue());
+        this.baseConsumer = baseConsumer;
+        this.baseConsumer.init(this, SMALL_QUANTITY_QUEUE.getValue());
     }
 
     @Override
@@ -30,13 +34,13 @@ public class SmallQuantityConsumerService extends DefaultConsumer {
         var product = (Product) SerializationUtils.deserialize(body);
         log.info("queue {}, value read = {}", SMALL_QUANTITY_QUEUE.getValue(), product);
         log.info("message routingKey = {}", envelope.getRoutingKey());
-        var value = BaseConsumerInit.getRandomNumber();
+        var value = baseConsumer.getRandomNumber();
         if (value % 2 == 0) {
             log.info("sending ack to rabbit");
             this.getChannel().basicAck(envelope.getDeliveryTag(), false);
         } else {
-            log.info("reject rabbit message");
-            this.getChannel().basicReject(envelope.getDeliveryTag(), false);
+            baseConsumer.rejectOrRequeueMessage(getChannel(), product, properties,
+                    SMALL_QUANTITY_DELAYED_QUEUE.getValue(), envelope.getDeliveryTag());
         }
     }
 }
