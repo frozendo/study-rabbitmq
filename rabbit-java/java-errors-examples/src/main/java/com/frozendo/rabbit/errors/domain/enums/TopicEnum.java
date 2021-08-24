@@ -3,10 +3,10 @@ package com.frozendo.rabbit.errors.domain.enums;
 public enum TopicEnum {
 
     JAVA_TOPIC_PRODUCT_EX("java-errors-topic-product-ex"),
+
     PRODUCT_REGISTER_QUEUE("java-errors-topic-register-queue"),
     SPORT_DEPARTMENT_QUEUE("java-errors-topic-sport-department-queue"),
     PROMOTION_QUEUE("java-errors-topic-promotion-queue"),
-
 
     PRODUCT_REGISTER_DELAYED_QUEUE("java-errors-topic-register-delayed-queue"),
     SPORT_DEPARTMENT_DELAYED_QUEUE("java-errors-topic-sport-department-delayed-queue"),
@@ -20,9 +20,9 @@ public enum TopicEnum {
     DEPARTMENT_SPORT_BINDING_KEY("department.sport.#"),
     DEPARTMENT_PROMOTION_BINDING_KEY("department.*.promotion"),
 
-    JAVA_ERRORS_REGISTER_DLQ_KEY("java-errors-register-dlq-key"),
-    JAVA_ERRORS_SPORT_DLQ_KEY("java-errors-sport-dlq-key"),
-    JAVA_ERRORS_PROMOTION_DLQ_KEY("java-errors-promotion-dlq-key"),
+    JAVA_ERRORS_REGISTER_DLQ_KEY("register-dlq-key"),
+    JAVA_ERRORS_SPORT_DLQ_KEY("sport-dlq-key"),
+    JAVA_ERRORS_PROMOTION_DLQ_KEY("promotion-dlq-key"),
 
     GENERAL_ROUTING_KEY("department."),
     SPORT_ROUTING_KEY("department.sport."),

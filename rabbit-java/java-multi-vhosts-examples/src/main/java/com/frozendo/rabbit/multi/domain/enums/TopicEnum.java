@@ -3,6 +3,7 @@ package com.frozendo.rabbit.multi.domain.enums;
 public enum TopicEnum {
 
     JAVA_TOPIC_PRODUCT_EX("java-multi-topic-product-ex"),
+
     PRODUCT_REGISTER_QUEUE("java-multi-topic-register-queue"),
     SPORT_DEPARTMENT_QUEUE("java-multi-topic-sport-department-queue"),
     PROMOTION_QUEUE("java-multi-topic-promotion-queue"),

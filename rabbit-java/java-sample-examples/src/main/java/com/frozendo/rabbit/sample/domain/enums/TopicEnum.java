@@ -3,6 +3,7 @@ package com.frozendo.rabbit.sample.domain.enums;
 public enum TopicEnum {
 
     JAVA_TOPIC_PRODUCT_EX("java-sample-topic-product-ex"),
+
     PRODUCT_REGISTER_QUEUE("java-sample-topic-register-queue"),
     SPORT_DEPARTMENT_QUEUE("java-sample-topic-sport-department-queue"),
     PROMOTION_QUEUE("java-sample-topic-promotion-queue"),

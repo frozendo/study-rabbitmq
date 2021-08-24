@@ -3,6 +3,7 @@ package com.frozendo.rabbit.sample.domain.enums;
 public enum FanoutEnum {
 
     JAVA_FANOUT_PRODUCT_EX("java-sample-fanout-product-ex"),
+
     INVENTORY_QUEUE("java-sample-fanout-inventory-queue"),
     PAYMENT_QUEUE("java-sample-fanout-payment-queue");
 
