@@ -27,7 +27,6 @@ public class InventoryConsumerService {
     public void consumer(Message message) {
         var product = (Product) SerializationUtils.deserialize(message.getBody());
         log.info("queue {}, value read = {}", INVENTORY_QUEUE.getValue(), product);
-        log.info("message routingKey = {}", message.getMessageProperties().getReceivedRoutingKey());
         var value = baseConsumer.getRandomNumber();
         if (value % 2 != 0) {
             baseConsumer.rejectOrRequeueMessage(INVENTORY_DELAYED_QUEUE.getValue(), message);

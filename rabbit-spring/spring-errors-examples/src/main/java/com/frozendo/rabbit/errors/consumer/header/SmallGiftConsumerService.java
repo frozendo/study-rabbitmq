@@ -27,7 +27,7 @@ public class SmallGiftConsumerService {
     public void consumer(Message message) {
         var product = (Product) SerializationUtils.deserialize(message.getBody());
         log.info("queue {}, value read = {}", SMALL_GIFT_QUEUE.getValue(), product);
-        log.info("message routingKey = {}", message.getMessageProperties().getReceivedRoutingKey());
+        log.info("headers = {}", message.getMessageProperties().getHeaders());
         var value = baseConsumer.getRandomNumber();
         if (value % 2 != 0) {
             baseConsumer.rejectOrRequeueMessage(SMALL_GIFT_DELAYED_QUEUE.getValue(), message);
