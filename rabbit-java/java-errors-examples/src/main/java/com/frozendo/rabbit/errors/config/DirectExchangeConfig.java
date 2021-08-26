@@ -21,6 +21,11 @@ import static com.frozendo.rabbit.errors.domain.enums.DirectEnum.BIG_QUANTITY_QU
 
 public class DirectExchangeConfig {
 
+    public static final String X_DEAD_LETTER_EXCHANGE = "x-dead-letter-exchange";
+    public static final String X_DEAD_LETTER_ROUTING_KEY = "x-dead-letter-routing-key";
+
+    private DirectExchangeConfig() {}
+
     public static void config(Channel channel) throws IOException {
         createDlqQueues(channel);
         doDlqBinding(channel);
@@ -37,25 +42,25 @@ public class DirectExchangeConfig {
 
     private static void createQueues(Channel channel) throws IOException {
         Map<String, Object> bigQuantityArgs = new HashMap<>();
-        bigQuantityArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
-        bigQuantityArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_BIG_QUANTITY_DLQ_KEY.getValue());
+        bigQuantityArgs.put(X_DEAD_LETTER_EXCHANGE, DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
+        bigQuantityArgs.put(X_DEAD_LETTER_ROUTING_KEY, JAVA_ERRORS_BIG_QUANTITY_DLQ_KEY.getValue());
         channel.queueDeclare(BIG_QUANTITY_QUEUE.getValue(), true, false, false, bigQuantityArgs);
 
         Map<String, Object> smallQuantityArgs = new HashMap<>();
-        smallQuantityArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
-        smallQuantityArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_SMALL_QUANTITY_DLQ_KEY.getValue());
+        smallQuantityArgs.put(X_DEAD_LETTER_EXCHANGE, DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
+        smallQuantityArgs.put(X_DEAD_LETTER_ROUTING_KEY, JAVA_ERRORS_SMALL_QUANTITY_DLQ_KEY.getValue());
         channel.queueDeclare(SMALL_QUANTITY_QUEUE.getValue(), true, false, false, smallQuantityArgs);
     }
 
     private static void createDelayedQueues(Channel channel) throws IOException {
         Map<String, Object> bigQuantityArgs = new HashMap<>();
-        bigQuantityArgs.put("x-dead-letter-exchange", JAVA_DIRECT_PRODUCT_EX.getValue());
-        bigQuantityArgs.put("x-dead-letter-routing-key", BIG_QUANTITY_KEY.getValue());
+        bigQuantityArgs.put(X_DEAD_LETTER_EXCHANGE, JAVA_DIRECT_PRODUCT_EX.getValue());
+        bigQuantityArgs.put(X_DEAD_LETTER_ROUTING_KEY, BIG_QUANTITY_KEY.getValue());
         channel.queueDeclare(BIG_QUANTITY_DELAYED_QUEUE.getValue(), true, false, false, bigQuantityArgs);
 
         Map<String, Object> smallQuantityArgs = new HashMap<>();
-        smallQuantityArgs.put("x-dead-letter-exchange", JAVA_DIRECT_PRODUCT_EX.getValue());
-        smallQuantityArgs.put("x-dead-letter-routing-key", SMALL_QUANTITY_KEY.getValue());
+        smallQuantityArgs.put(X_DEAD_LETTER_EXCHANGE, JAVA_DIRECT_PRODUCT_EX.getValue());
+        smallQuantityArgs.put(X_DEAD_LETTER_ROUTING_KEY, SMALL_QUANTITY_KEY.getValue());
         channel.queueDeclare(SMALL_QUANTITY_DELAYED_QUEUE.getValue(), true, false, false, smallQuantityArgs);
     }
 

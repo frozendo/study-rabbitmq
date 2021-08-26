@@ -2,18 +2,19 @@ package com.frozendo.rabbit.multi.config;
 
 import com.frozendo.rabbit.multi.domain.enums.TopicEnum;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @Component
 public class TopicExchangeConfig {
 
-    private static Connection connection;
+    private static final Logger log = LoggerFactory.getLogger(TopicExchangeConfig.class);
+
     private static Channel channel;
 
     public TopicExchangeConfig() {
@@ -21,24 +22,36 @@ public class TopicExchangeConfig {
             startConnection();
             config();
         } catch (IOException | TimeoutException ex) {
-            System.out.println("Rabbit exception");
+            log.error("Rabbit exception");
             ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println("General exception");
+            log.error("General exception");
             ex.printStackTrace();
         }
     }
 
     public static Channel getChannel() {
-        return channel;
+        try {
+            if (channel == null) {
+                startConnection();
+            }
+            return channel;
+        } catch (IOException | TimeoutException ex) {
+            log.error("Rabbit exception");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            log.error("General exception");
+            ex.printStackTrace();
+        }
+        return null;
     }
 
-    private void startConnection() throws IOException, TimeoutException {
+    private static void startConnection() throws IOException, TimeoutException {
         var factory = new ConnectionFactory();
         factory.setUsername("user-topic");
         factory.setPassword("test12");
         factory.setVirtualHost("/vtopic");
-        connection = factory.newConnection();
+        var connection = factory.newConnection();
         channel = connection.createChannel();
     }
 

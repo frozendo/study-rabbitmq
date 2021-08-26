@@ -15,7 +15,6 @@ import java.io.IOException;
 
 import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.INVENTORY_DELAYED_QUEUE;
 import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.INVENTORY_QUEUE;
-import static com.frozendo.rabbit.errors.domain.enums.FanoutEnum.PAYMENT_DELAYED_QUEUE;
 
 @Component
 public class InventoryConsumerService extends DefaultConsumer {
@@ -34,7 +33,6 @@ public class InventoryConsumerService extends DefaultConsumer {
     public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
         var product = (Product) SerializationUtils.deserialize(body);
         log.info("queue {}, value read = {}", INVENTORY_QUEUE.getValue(), product);
-        log.info("message routingKey = {}", envelope.getRoutingKey());
         var value = baseConsumer.getRandomNumber();
         if (value % 2 == 0) {
             log.info("sending ack to rabbit");

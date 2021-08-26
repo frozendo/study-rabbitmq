@@ -26,10 +26,10 @@ public class BaseConsumer {
         try {
             consumer.getChannel().basicConsume(queue, false, queue.concat("-errors-tag"), consumer);
         } catch (IOException ex) {
-            System.out.println("Rabbit error");
+            log.error("Rabbit error");
             ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println("General error");
+            log.error("General error");
             ex.printStackTrace();
         }
     }
@@ -76,10 +76,10 @@ public class BaseConsumer {
                     properties,
                     product.toByteArray());
         } catch (IOException ex) {
-            System.out.println("Rabbit exception");
+            log.error("Rabbit exception");
             ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println("General exception");
+            log.error("General exception");
             ex.printStackTrace();
         }
     }

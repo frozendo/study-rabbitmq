@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class FanoutExchangeConfig {
 
+    private FanoutExchangeConfig() {}
+
     public static void config(Channel channel) throws IOException {
         createExchange(channel);
         createQueues(channel);

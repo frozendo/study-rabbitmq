@@ -1,8 +1,9 @@
 package com.frozendo.rabbit.sample.config;
 
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -13,20 +14,14 @@ import java.util.concurrent.TimeoutException;
 @Component
 public class RabbitBaseConfig {
 
-    private static Connection connection;
+    private static final Logger log = LoggerFactory.getLogger(RabbitBaseConfig.class);
+
     private static Channel channel;
 
     @PostConstruct
     public void init() {
         startConnection();
         configRabbit();
-    }
-
-    public Connection getConnection() {
-        if (Objects.isNull(connection)) {
-            startConnection();
-        }
-        return connection;
     }
 
     public Channel getChannel() {
@@ -43,26 +38,25 @@ public class RabbitBaseConfig {
             FanoutExchangeConfig.config(channel);
             HeaderExchangeConfig.config(channel);
         } catch (IOException ex) {
-            System.out.println("Rabbit exception");
+            log.error("Rabbit exception");
             ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println("General exception");
+            log.error("General exception");
             ex.printStackTrace();
         }
     }
 
-    private void startConnection() {
+    private static void startConnection() {
         var factory = new ConnectionFactory();
         factory.setUsername("admin");
         factory.setPassword("test12");
         try {
-            connection = factory.newConnection();
-            channel = connection.createChannel();
+            channel = factory.newConnection().createChannel();
         } catch (IOException | TimeoutException ex) {
-            System.out.println("Rabbit exception");
+            log.error("Rabbit exception");
             ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println("General exception");
+            log.error("General exception");
             ex.printStackTrace();
         }
     }

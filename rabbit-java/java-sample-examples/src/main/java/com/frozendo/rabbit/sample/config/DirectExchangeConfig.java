@@ -12,6 +12,8 @@ import static com.frozendo.rabbit.sample.domain.enums.DirectEnum.BIG_QUANTITY_QU
 
 public class DirectExchangeConfig {
 
+    private DirectExchangeConfig() {}
+
     public static void config(Channel channel) throws IOException {
         createExchange(channel);
         createQueues(channel);

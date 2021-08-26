@@ -29,7 +29,7 @@ public class BigGiftConsumerService extends DefaultConsumer {
     public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
         var product = (Product) SerializationUtils.deserialize(body);
         log.info("queue {}, value read = {}", BIG_GIFT_QUEUE.getValue(), product);
-        log.info("message routingKey = {}", envelope.getRoutingKey());
+        log.info("headers = {}", properties.getHeaders());
         this.getChannel().basicAck(envelope.getDeliveryTag(), false);
     }
 }

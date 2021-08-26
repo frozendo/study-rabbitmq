@@ -39,10 +39,10 @@ public abstract class ExchangeService {
                     basicProperties,
                     product.toByteArray());
         } catch (IOException ex) {
-            System.out.println("Rabbit exception");
+            logger.error("Rabbit exception");
             ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println("General exception");
+            logger.error("General exception");
             ex.printStackTrace();
         }
     }

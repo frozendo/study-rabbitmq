@@ -23,6 +23,11 @@ import static com.frozendo.rabbit.errors.domain.enums.HeaderEnum.X_MATCH_HEADER_
 
 public class HeaderExchangeConfig {
 
+    public static final String X_DEAD_LETTER_EXCHANGE = "x-dead-letter-exchange";
+    public static final String X_DEAD_LETTER_ROUTING_KEY = "x-dead-letter-routing-key";
+
+    private HeaderExchangeConfig() {}
+
     public static void config(Channel channel) throws IOException {
         createDlqQueues(channel);
         doDlqBinding(channel);
@@ -39,25 +44,25 @@ public class HeaderExchangeConfig {
 
     private static void createQueues(Channel channel) throws IOException {
         Map<String, Object> bigGiftArgs = new HashMap<>();
-        bigGiftArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
-        bigGiftArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_BIG_GIFT_DLQ_KEY.getValue());
+        bigGiftArgs.put(X_DEAD_LETTER_EXCHANGE, DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
+        bigGiftArgs.put(X_DEAD_LETTER_ROUTING_KEY, JAVA_ERRORS_BIG_GIFT_DLQ_KEY.getValue());
         channel.queueDeclare(BIG_GIFT_QUEUE.getValue(), true, false, false, bigGiftArgs);
 
         Map<String, Object> smallGiftArgs = new HashMap<>();
-        smallGiftArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
-        smallGiftArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_SMALL_GIFT_DLQ_KEY.getValue());
+        smallGiftArgs.put(X_DEAD_LETTER_EXCHANGE, DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
+        smallGiftArgs.put(X_DEAD_LETTER_ROUTING_KEY, JAVA_ERRORS_SMALL_GIFT_DLQ_KEY.getValue());
         channel.queueDeclare(SMALL_GIFT_QUEUE.getValue(), true, false, false, smallGiftArgs);
     }
 
     private static void createDelayedQueues(Channel channel) throws IOException {
         Map<String, Object> bigGiftArgs = new HashMap<>();
-        bigGiftArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
-        bigGiftArgs.put("x-dead-letter-routing-key", BIG_GIFT_QUEUE.getValue());
+        bigGiftArgs.put(X_DEAD_LETTER_EXCHANGE, StringUtils.EMPTY);
+        bigGiftArgs.put(X_DEAD_LETTER_ROUTING_KEY, BIG_GIFT_QUEUE.getValue());
         channel.queueDeclare(BIG_GIFT_DELAYED_QUEUE.getValue(), true, false, false, bigGiftArgs);
 
         Map<String, Object> smallGiftArgs = new HashMap<>();
-        smallGiftArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
-        smallGiftArgs.put("x-dead-letter-routing-key", SMALL_GIFT_QUEUE.getValue());
+        smallGiftArgs.put(X_DEAD_LETTER_EXCHANGE, StringUtils.EMPTY);
+        smallGiftArgs.put(X_DEAD_LETTER_ROUTING_KEY, SMALL_GIFT_QUEUE.getValue());
         channel.queueDeclare(SMALL_GIFT_DELAYED_QUEUE.getValue(), true, false, false, smallGiftArgs);
     }
 

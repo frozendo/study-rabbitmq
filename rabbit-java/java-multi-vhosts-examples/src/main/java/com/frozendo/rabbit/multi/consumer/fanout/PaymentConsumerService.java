@@ -29,7 +29,6 @@ public class PaymentConsumerService extends DefaultConsumer {
     public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
         var product = (Product) SerializationUtils.deserialize(body);
         log.info("queue {}, value read = {}", PAYMENT_QUEUE.getValue(), product);
-        log.info("message routingKey = {}", envelope.getRoutingKey());
         this.getChannel().basicAck(envelope.getDeliveryTag(), false);
     }
 

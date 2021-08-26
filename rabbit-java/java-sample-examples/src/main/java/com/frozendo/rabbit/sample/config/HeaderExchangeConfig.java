@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class HeaderExchangeConfig {
 
+    private HeaderExchangeConfig() {}
+
     public static void config(Channel channel) throws IOException {
         createExchange(channel);
         createQueues(channel);

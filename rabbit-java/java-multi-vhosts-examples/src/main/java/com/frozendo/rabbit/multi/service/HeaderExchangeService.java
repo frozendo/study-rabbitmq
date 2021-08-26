@@ -1,11 +1,9 @@
 package com.frozendo.rabbit.multi.service;
 
-import com.frozendo.rabbit.multi.config.DirectExchangeConfig;
 import com.frozendo.rabbit.multi.config.HeaderExchangeConfig;
 import com.frozendo.rabbit.multi.domain.Product;
 import com.frozendo.rabbit.multi.domain.enums.HeaderEnum;
 import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.MessageProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class HeaderExchangeService implements ExchangeService {
@@ -34,10 +31,10 @@ public class HeaderExchangeService implements ExchangeService {
                     getBasicProperties(product),
                     product.toByteArray());
         } catch (IOException ex) {
-            System.out.println("Rabbit exception");
+            logger.error("Rabbit exception");
             ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println("General exception");
+            logger.error("General exception");
             ex.printStackTrace();
         }
     }

@@ -7,6 +7,8 @@ import java.io.IOException;
 
 public class TopicExchangeConfig {
 
+    private TopicExchangeConfig() {}
+
     public static void config(Channel channel) throws IOException {
         createExchange(channel);
         createQueues(channel);

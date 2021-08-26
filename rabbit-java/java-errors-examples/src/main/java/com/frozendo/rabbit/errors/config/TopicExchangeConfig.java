@@ -27,6 +27,11 @@ import static com.frozendo.rabbit.errors.domain.enums.TopicEnum.SPORT_DEPARTMENT
 
 public class TopicExchangeConfig {
 
+    public static final String X_DEAD_LETTER_EXCHANGE = "x-dead-letter-exchange";
+    public static final String X_DEAD_LETTER_ROUTING_KEY = "x-dead-letter-routing-key";
+
+    private TopicExchangeConfig() {}
+
     public static void config(Channel channel) throws IOException {
         createDlqQueues(channel);
         doDlqBinding(channel);
@@ -43,35 +48,35 @@ public class TopicExchangeConfig {
 
     private static void createQueues(Channel channel) throws IOException {
         Map<String, Object> registerArgs = new HashMap<>();
-        registerArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
-        registerArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_REGISTER_DLQ_KEY.getValue());
+        registerArgs.put(X_DEAD_LETTER_EXCHANGE, DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
+        registerArgs.put(X_DEAD_LETTER_ROUTING_KEY, JAVA_ERRORS_REGISTER_DLQ_KEY.getValue());
         channel.queueDeclare(PRODUCT_REGISTER_QUEUE.getValue(), true, false, false, registerArgs);
 
         Map<String, Object> sportArgs = new HashMap<>();
-        sportArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
-        sportArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_SPORT_DLQ_KEY.getValue());
+        sportArgs.put(X_DEAD_LETTER_EXCHANGE, DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
+        sportArgs.put(X_DEAD_LETTER_ROUTING_KEY, JAVA_ERRORS_SPORT_DLQ_KEY.getValue());
         channel.queueDeclare(SPORT_DEPARTMENT_QUEUE.getValue(), true, false, false, sportArgs);
 
         Map<String, Object> promotionArgs = new HashMap<>();
-        promotionArgs.put("x-dead-letter-exchange", DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
-        promotionArgs.put("x-dead-letter-routing-key", JAVA_ERRORS_PROMOTION_DLQ_KEY.getValue());
+        promotionArgs.put(X_DEAD_LETTER_EXCHANGE, DlqEnum.JAVA_ERRORS_DLQ_EX.getValue());
+        promotionArgs.put(X_DEAD_LETTER_ROUTING_KEY, JAVA_ERRORS_PROMOTION_DLQ_KEY.getValue());
         channel.queueDeclare(PROMOTION_QUEUE.getValue(), true, false, false, promotionArgs);
     }
 
     private static void createDelayedQueues(Channel channel) throws IOException {
         Map<String, Object> registerArgs = new HashMap<>();
-        registerArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
-        registerArgs.put("x-dead-letter-routing-key", PRODUCT_REGISTER_QUEUE.getValue());
+        registerArgs.put(X_DEAD_LETTER_EXCHANGE, StringUtils.EMPTY);
+        registerArgs.put(X_DEAD_LETTER_ROUTING_KEY, PRODUCT_REGISTER_QUEUE.getValue());
         channel.queueDeclare(PRODUCT_REGISTER_DELAYED_QUEUE.getValue(), true, false, false, registerArgs);
 
         Map<String, Object> sportArgs = new HashMap<>();
-        sportArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
-        sportArgs.put("x-dead-letter-routing-key", SPORT_DEPARTMENT_QUEUE.getValue());
+        sportArgs.put(X_DEAD_LETTER_EXCHANGE, StringUtils.EMPTY);
+        sportArgs.put(X_DEAD_LETTER_ROUTING_KEY, SPORT_DEPARTMENT_QUEUE.getValue());
         channel.queueDeclare(SPORT_DEPARTMENT_DELAYED_QUEUE.getValue(), true, false, false, sportArgs);
 
         Map<String, Object> promotionArgs = new HashMap<>();
-        promotionArgs.put("x-dead-letter-exchange", StringUtils.EMPTY);
-        promotionArgs.put("x-dead-letter-routing-key", PROMOTION_QUEUE.getValue());
+        promotionArgs.put(X_DEAD_LETTER_EXCHANGE, StringUtils.EMPTY);
+        promotionArgs.put(X_DEAD_LETTER_ROUTING_KEY, PROMOTION_QUEUE.getValue());
         channel.queueDeclare(PROMOTION_DELAYED_QUEUE.getValue(), true, false, false, promotionArgs);
     }
 
