@@ -1,0 +1,23 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.frozendo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '16'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+}
+
+test {
+	useJUnitPlatform()
+}
